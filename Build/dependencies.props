@@ -1,0 +1,77 @@
+<Project>
+	<PropertyGroup Label="SDK Versions">
+		<NetStandardTargetVersion>netstandard2.1</NetStandardTargetVersion>
+		<NetCoreTargetVersion>net6.0</NetCoreTargetVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Package Versions">
+
+		<AzureIdentity>1.8.1</AzureIdentity>
+		<AzureExtensionsAspNetCoreConfigurationSecrets>1.2.2</AzureExtensionsAspNetCoreConfigurationSecrets>
+
+		<AspNetCoreHealthChecksRedis>6.0.4</AspNetCoreHealthChecksRedis>
+		<AspNetCoreHealthChecksMongoDb>6.0.2</AspNetCoreHealthChecksMongoDb>
+
+		<AutoMapper>12.0.1</AutoMapper>
+		<AutoMapperData>7.0.2</AutoMapperData>
+		<AutoMapperExtensionsMicrosoftDependencyInjection>12.0.0</AutoMapperExtensionsMicrosoftDependencyInjection>
+
+		<MongoDBDriver>2.18.0</MongoDBDriver>
+		<SystemReactive>5.0.0</SystemReactive>
+
+		<SCAdministradorLogs>1.0.14644</SCAdministradorLogs>
+		<SCAdministradorLlaves>1.0.13737</SCAdministradorLlaves>
+		<SSCDatosRepositorioGenerico>3.0.3</SSCDatosRepositorioGenerico>
+		<SCConfigurationProviderMongo>1.0.40329</SCConfigurationProviderMongo>
+
+		<credinetComunApi>1.0.15912</credinetComunApi>
+		<credinetcomunapicore3>1.0.15912</credinetcomunapicore3>
+		<credinetexceptionmiddleware>1.0.64211</credinetexceptionmiddleware>
+
+		<NewtonsoftJson>13.0.2</NewtonsoftJson>
+		<StackExchangeRedis>2.6.90</StackExchangeRedis>
+		<WindowsAzureStorage>9.3.3</WindowsAzureStorage>
+		<FluentValidation>11.2.1</FluentValidation>
+		<FluentValidationAspNetCore>11.2.2</FluentValidationAspNetCore>
+
+		<MicrosoftAzureKeyVault>3.0.2</MicrosoftAzureKeyVault>
+		<MicrosoftCodeAnalysisCommon>2.10.0</MicrosoftCodeAnalysisCommon>
+		<MicrosoftAspNetCoreRazorDesign>2.2.0</MicrosoftAspNetCoreRazorDesign>
+		<MicrosoftAspNetCoreMvcNewtonsoftJson>6.0.13</MicrosoftAspNetCoreMvcNewtonsoftJson>
+		<MicrosoftExtensionsLoggingAbstractions>7.0.0</MicrosoftExtensionsLoggingAbstractions>
+		<MicrosoftApplicationInsightsAspNetCore>2.5.1</MicrosoftApplicationInsightsAspNetCore>
+		<MicrosoftExtensionsPlatformAbstractions>1.1.0</MicrosoftExtensionsPlatformAbstractions>
+		<MicrosoftExtensionsConfigurationAzureKeyVault>3.1.24</MicrosoftExtensionsConfigurationAzureKeyVault>
+		<MicrosoftAspNetCoreMvcVersioningApiExplorer>5.0.0</MicrosoftAspNetCoreMvcVersioningApiExplorer>
+		<MicrosoftIdentityModelClientsActiveDirectory>5.2.9</MicrosoftIdentityModelClientsActiveDirectory>
+		<MicrosoftVisualStudioAzureContainersToolsTargets>1.17.0</MicrosoftVisualStudioAzureContainersToolsTargets>
+
+		<Serilog>2.12.0</Serilog>
+		<SerilogAspNetCore>2.1.1</SerilogAspNetCore>
+		<SerilogEnrichersSpan>3.1.0</SerilogEnrichersSpan>
+		<SerilogAspNetCore>6.1.0</SerilogAspNetCore>
+		<SerilogSinksConsole>4.1.0</SerilogSinksConsole>
+		<SerilogExtensionsHosting>5.0.1</SerilogExtensionsHosting>
+		<ElasticApmSerilogEnricher>1.6.0-alpha1</ElasticApmSerilogEnricher>
+		<SerilogSinksElasticsearch>8.5.0-alpha0003</SerilogSinksElasticsearch>
+
+		<OpenTelemetryExporterZipkin>1.3.2</OpenTelemetryExporterZipkin>
+		<OpenTelemetryExporterConsole>1.3.2</OpenTelemetryExporterConsole>
+		<OpenTelemetryExtensionsHosting>1.0.0-rc9.6</OpenTelemetryExtensionsHosting>
+		<OpenTelemetryInstrumentationHttp>1.0.0-rc9.6</OpenTelemetryInstrumentationHttp>
+		<OpenTelemetryInstrumentationAspNetCore>1.0.0-rc9.6</OpenTelemetryInstrumentationAspNetCore>
+		<OpenTelemetryContribInstrumentationEntityFrameworkCore>1.0.0-beta2</OpenTelemetryContribInstrumentationEntityFrameworkCore>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Test Package Versions">
+		<Moq>4.18.4</Moq>
+		<xunitextensibilitycore>2.4.2</xunitextensibilitycore>
+		<XUnitPackageVersion>2.4.2</XUnitPackageVersion>
+		<XUnitRunnerVisualstudio>2.4.5</XUnitRunnerVisualstudio>
+		<MicrosoftNETTestSdkPackageVersion>17.4.1</MicrosoftNETTestSdkPackageVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Label="CLI Tools Versions">
+		<DotnetXUnitPackageVersion>2.3.1</DotnetXUnitPackageVersion>
+	</PropertyGroup>
+</Project>

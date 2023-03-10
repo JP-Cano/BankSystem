@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package clientes;
+
+option csharp_namespace = "EntryPoints.GRPc.Protos";
+
+// Requests
+message CrearUsuarioRequest {
+  string nombreCompleto = 1;
+  int32 rol = 2;
+}
+
+message CrearClienteProto {
+  int32 TipoIdentificacion = 1;
+  string NumeroIdentificacion = 2;
+  string Nombres = 3;
+  string Apellidos = 4;
+  string CorreoElectronico = 5;
+  string FechaNacimiento = 6;
+}
+
+// Responses
+message UsuarioProto {
+  string id = 1;
+  string nombreCompleto = 2;
+  int32 rol = 3;
+}
+
+message ClienteProto {
+  string FechaActual = 1;
+  string Id = 2;
+  int32 TipoIdentificacion = 3;
+  string NumeroIdentificacion = 4;
+  string Nombres = 5;
+  string Apellidos = 6;
+  string CorreoElectronico = 7;
+  string FechaNacimiento = 8;
+  string FechaCreacion = 9;
+  repeated ActualizacionProto historialActualizaciones = 10;
+  bool EstaHabilitado = 11;
+  bool TieneDeudasActivas = 12;
+  repeated string Productos = 13;
+}
+
+message Empty {} 
+
+message RespuestaListaClientes {
+	repeated ClienteProto clientes = 1;
+}
+
+message ActualizacionProto {
+  int32 tipoActualizacion = 1;
+  UsuarioProto usuarioModificacion = 2;
+  string fecha = 3;
+}
+
+message ClienteCrearRequest {
+  string idUsuario = 1;
+  ClienteProto cliente = 2;
+}
+
+// Services
+service ClienteServices{
+  rpc CrearUsuario(CrearUsuarioRequest) returns (UsuarioProto);
+  rpc CrearCliente(ClienteCrearRequest) returns (ClienteProto);
+  rpc ObtenerTodosLosClientes(Empty) returns (RespuestaListaClientes);
+}

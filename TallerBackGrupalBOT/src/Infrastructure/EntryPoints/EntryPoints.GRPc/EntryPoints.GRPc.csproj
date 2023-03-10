@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Data" Version="7.0.2" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Protos" />
+        <Protobuf Include="**/*.proto" OutputDir="%(RelativePath)Protos/" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="Proto/Cliente.proto" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Domain\Domain.Model\Domain.Model.csproj" />
+      <ProjectReference Include="..\..\..\Domain\Domain.UseCase\Domain.UseCase.csproj" />
+    </ItemGroup>
+</Project>

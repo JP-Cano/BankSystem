@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "EntryPoints.GRPc": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61981;http://localhost:61982"
+    }
+  }
+}

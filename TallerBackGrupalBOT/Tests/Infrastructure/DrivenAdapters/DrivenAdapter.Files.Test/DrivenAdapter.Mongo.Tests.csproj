@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />
+    <PackageReference Include="Moq" Version="$(Moq)" />
+    <PackageReference Include="xunit" Version="$(XUnitPackageVersion)" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XUnitRunnerVisualstudio)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Applications\TallerBackGrupalBOT.AppServices\TallerBackGrupalBOT.AppServices.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Infrastructure\DrivenAdapters\DrivenAdapters.Mongo\DrivenAdapters.Mongo.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Infrastructure\EntryPoints\EntryPoints.ReactiveWeb\EntryPoints.ReactiveWeb.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Applications\TallerBackGrupalBOT.AppServices\TallerBackGrupalBOT.AppServices.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Infrastructure\DrivenAdapters\DrivenAdapters.Mongo\DrivenAdapters.Mongo.csproj" />
+    <ProjectReference Include="..\..\..\Domain\Domain.Model.Tests\Domain.Model.Tests.csproj" />
+  </ItemGroup>
+</Project>
