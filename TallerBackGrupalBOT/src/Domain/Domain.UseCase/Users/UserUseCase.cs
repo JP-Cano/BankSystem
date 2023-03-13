@@ -44,8 +44,8 @@ namespace Domain.UseCase.Users
             User user = await _userRepository.FindByIdAsync(userId);
             if (user is null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.EntidadNoEncontrada.GetDescription(),
-                    (int)TipoExcepcionNegocio.EntidadNoEncontrada);
+                throw new BusinessException(BusinessTypeException.EntityNotFound.GetDescription(),
+                    (int)BusinessTypeException.EntityNotFound);
             }
 
             return user;

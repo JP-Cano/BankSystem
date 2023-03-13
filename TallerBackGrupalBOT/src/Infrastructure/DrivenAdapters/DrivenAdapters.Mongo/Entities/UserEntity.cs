@@ -9,13 +9,13 @@ namespace DrivenAdapters.Mongo.Entities;
 /// <summary>
 /// DTO de entidad <see cref="User"/>
 /// </summary>
-public class UsuarioEntity : EntityBase
+public class UserEntity : EntityBase
 {
     /// <summary>
     /// Nombre completo
     /// </summary>
-    [BsonElement("nombre_completo")]
-    public string NombreCompleto { get; set; }
+    [BsonElement("full_name")]
+    public string FullName { get; set; }
 
     /// <summary>
     /// Rol

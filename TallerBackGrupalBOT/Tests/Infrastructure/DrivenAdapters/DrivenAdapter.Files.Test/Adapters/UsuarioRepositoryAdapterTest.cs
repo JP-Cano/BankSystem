@@ -16,8 +16,8 @@ namespace DrivenAdapter.Mongo.Tests.Adapters;
 
 public class UsuarioRepositoryAdapterTest
 {
-    private readonly Mock<IMongoCollection<UsuarioEntity>> _mockColeccionMongoUsuario;
-    private readonly Mock<IAsyncCursor<UsuarioEntity>> _mockUsuarioCursor;
+    private readonly Mock<IMongoCollection<UserEntity>> _mockColeccionMongoUsuario;
+    private readonly Mock<IAsyncCursor<UserEntity>> _mockUsuarioCursor;
     private readonly IUserRepository _userRepository;
 
     public UsuarioRepositoryAdapterTest()
@@ -27,8 +27,8 @@ public class UsuarioRepositoryAdapterTest
 
         var mapper = mapperConfiguration.CreateMapper();
         Mock<IContext> mockDbContext = new();
-        _mockColeccionMongoUsuario = new Mock<IMongoCollection<UsuarioEntity>>();
-        _mockUsuarioCursor = new Mock<IAsyncCursor<UsuarioEntity>>();
+        _mockColeccionMongoUsuario = new Mock<IMongoCollection<UserEntity>>();
+        _mockUsuarioCursor = new Mock<IAsyncCursor<UserEntity>>();
 
         _mockUsuarioCursor.SetupSequence(item => item.MoveNext(It.IsAny<CancellationToken>()))
             .Returns(true)
@@ -51,10 +51,10 @@ public class UsuarioRepositoryAdapterTest
     public async Task ObtenerTodosAsync_RetornaTodosLosUsuarios_Exitoso()
     {
         // Arrange
-        List<UsuarioEntity> usuarioEntities = new()
+        List<UserEntity> usuarioEntities = new()
         {
-            new UsuarioEntity(),
-            new UsuarioEntity()
+            new UserEntity(),
+            new UserEntity()
         };
 
         _mockUsuarioCursor
@@ -63,8 +63,8 @@ public class UsuarioRepositoryAdapterTest
 
         _mockColeccionMongoUsuario
             .Setup(usuario => usuario.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(_mockUsuarioCursor.Object);
 
@@ -79,8 +79,8 @@ public class UsuarioRepositoryAdapterTest
 
         _mockColeccionMongoUsuario
             .Verify(usuario => usuario.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()
             ), Times.Once);
     }
@@ -91,12 +91,12 @@ public class UsuarioRepositoryAdapterTest
         // Arrange
         _mockUsuarioCursor
             .Setup(cursor => cursor.Current)
-            .Returns(new List<UsuarioEntity>());
+            .Returns(new List<UserEntity>());
 
         _mockColeccionMongoUsuario
             .Setup(usuario => usuario.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(_mockUsuarioCursor.Object);
 
@@ -111,8 +111,8 @@ public class UsuarioRepositoryAdapterTest
 
         _mockColeccionMongoUsuario
             .Verify(usuario => usuario.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()
             ), Times.Once);
     }
@@ -129,25 +129,25 @@ public class UsuarioRepositoryAdapterTest
             .WithNombreCompleto(nombreCompleto)
             .Build();
 
-        UsuarioEntity usuarioEntity = new UsuarioEntity()
+        UserEntity userEntity = new UserEntity()
         {
             Id = user.Id,
-            NombreCompleto = user.FullName,
+            FullName = user.FullName,
         };
 
         _mockUsuarioCursor
             .Setup(cursor => cursor.Current)
-            .Returns(new List<UsuarioEntity>() { usuarioEntity });
+            .Returns(new List<UserEntity>() { userEntity });
 
         _mockColeccionMongoUsuario
             .Setup(cursor => cursor.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(_mockUsuarioCursor.Object);
 
         // Act
-        User userEncontrado = await _userRepository.FindByIdAsync(usuarioEntity.Id);
+        User userEncontrado = await _userRepository.FindByIdAsync(userEntity.Id);
 
         // Assert
         Assert.Equal(user.FullName, userEncontrado.FullName);
@@ -170,7 +170,7 @@ public class UsuarioRepositoryAdapterTest
 
         _mockColeccionMongoUsuario
             .Setup(coleccion => coleccion.InsertOneAsync(
-                It.IsAny<UsuarioEntity>(),
+                It.IsAny<UserEntity>(),
                 It.IsAny<InsertOneOptions>(),
                 It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);

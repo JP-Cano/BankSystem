@@ -62,7 +62,7 @@ namespace EntryPoints.ReactiveWeb.Base
             {
                 Logger.LogError(ex.StackTrace);
                 return BadRequest(new ResponseError(new List<ResponseContent> {
-                    new ResponseContent(ex.Message, $"{(TipoExcepcionNegocio.ExceptionNoControlada.GetDescription(), (int)TipoExcepcionNegocio.ExceptionNoControlada)} - {ex.Message}")
+                    new ResponseContent(ex.Message, $"{(BusinessTypeException.UncontrolledException.GetDescription(), (int)BusinessTypeException.UncontrolledException)} - {ex.Message}")
                 }));
             }
         }

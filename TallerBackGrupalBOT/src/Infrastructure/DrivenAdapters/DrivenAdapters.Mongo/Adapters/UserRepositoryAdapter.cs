@@ -14,7 +14,7 @@ namespace DrivenAdapters.Mongo.Adapters;
 /// </summary>
 public class UserRepositoryAdapter : IUserRepository
 {
-    private readonly IMongoCollection<UsuarioEntity> _mongoUsuarioCollection;
+    private readonly IMongoCollection<UserEntity> _mongoUsuarioCollection;
     private readonly IMapper _mapper;
 
     /// <summary>
@@ -34,8 +34,8 @@ public class UserRepositoryAdapter : IUserRepository
     /// <returns></returns>
     public async Task<List<User>> FindAllAsync()
     {
-        IAsyncCursor<UsuarioEntity> usuarioCursor = await _mongoUsuarioCollection
-            .FindAsync(Builders<UsuarioEntity>.Filter.Empty);
+        IAsyncCursor<UserEntity> usuarioCursor = await _mongoUsuarioCollection
+            .FindAsync(Builders<UserEntity>.Filter.Empty);
 
         return usuarioCursor
             .ToList()
@@ -50,10 +50,10 @@ public class UserRepositoryAdapter : IUserRepository
     /// <returns></returns>
     public async Task<User> FindByIdAsync(string userId)
     {
-        IAsyncCursor<UsuarioEntity> cursor = await _mongoUsuarioCollection.FindAsync(c => c.Id == userId);
-        UsuarioEntity usuarioEntity = await cursor.FirstOrDefaultAsync();
+        IAsyncCursor<UserEntity> cursor = await _mongoUsuarioCollection.FindAsync(c => c.Id == userId);
+        UserEntity userEntity = await cursor.FirstOrDefaultAsync();
 
-        return usuarioEntity == null ? null : _mapper.Map<User>(usuarioEntity);
+        return userEntity == null ? null : _mapper.Map<User>(userEntity);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class UserRepositoryAdapter : IUserRepository
     /// <returns></returns>
     public async Task<User> CreateAsync(User user)
     {
-        var usuarioEntity = _mapper.Map<UsuarioEntity>(user);
+        var usuarioEntity = _mapper.Map<UserEntity>(user);
         await _mongoUsuarioCollection.InsertOneAsync(usuarioEntity);
 
         return _mapper.Map<User>(usuarioEntity);

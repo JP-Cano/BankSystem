@@ -12,21 +12,21 @@ namespace DrivenAdapters.Mongo.Entities
     /// <summary>
     /// DTO de entidad <see cref="Account"/>
     /// </summary>
-    public class CuentaEntity : EntityBase
+    public class AccountEntity : EntityBase
     {
         /// <summary>
         /// Id de entidad <see cref="Client"/>
         /// </summary>
-        [JsonProperty("idCliente")]
-        [BsonElement("idCliente")]
+        [JsonProperty("client_id")]
+        [BsonElement("client_id")]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string IdCliente { get; set; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Numero de Cuenta
         /// </summary>
-        [BsonElement("numeroCuenta")]
-        public string NumeroCuenta { get; set; }
+        [BsonElement("account_number")]
+        public string AccountNumber { get; set; }
 
         /// <summary>
         /// Enum <see cref="AccountType"/>
@@ -45,27 +45,27 @@ namespace DrivenAdapters.Mongo.Entities
         /// <summary>
         /// Balance
         /// </summary>
-        [BsonElement("saldo")]
+        [BsonElement("balance")]
         [BsonRepresentation(BsonType.Decimal128)]
-        public decimal Saldo { get; set; }
+        public decimal Balance { get; set; }
 
         /// <summary>
         /// Balance Disponible
         /// </summary>
-        [BsonElement("saldo_disponible")]
+        [BsonElement("available_balance")]
         [BsonRepresentation(BsonType.Decimal128)]
-        public decimal SaldoDisponible { get; set; }
+        public decimal AvailableBalance { get; set; }
 
         /// <summary>
         /// Excenta GMF
         /// </summary>
-        [BsonElement("exenta")]
-        public bool Exenta { get; private set; }
+        [BsonElement("exempt")]
+        public bool Exempt { get; private set; }
 
         /// <summary>
         /// Historial de Modificaciones de la cuenta
         /// </summary>
-        [BsonElement("historial_modificaciones")]
-        public List<Modification> HistorialModificaciones { get; private set; }
+        [BsonElement("modification_history")]
+        public List<Modification> ModificationHistory { get; private set; }
     }
 }

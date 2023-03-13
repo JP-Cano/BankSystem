@@ -5,7 +5,7 @@ namespace EntryPoints.ReactiveWeb.Entities.Handlers;
 /// <summary>
 /// Handler DTO de entidad <see cref="User"/>
 /// </summary>
-public class UsuarioHandler
+public class UserHandler
 {
     /// <summary>
     /// Id
@@ -15,7 +15,7 @@ public class UsuarioHandler
     /// <summary>
     /// Nombre completo
     /// </summary>
-    public string NombreCompleto { get; set; }
+    public string FullName { get; set; }
 
     /// <summary>
     /// Rol

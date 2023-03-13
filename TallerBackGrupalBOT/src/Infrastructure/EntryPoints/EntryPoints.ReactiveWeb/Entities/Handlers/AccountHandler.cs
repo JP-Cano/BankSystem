@@ -19,12 +19,12 @@ namespace EntryPoints.ReactiveWeb.Entities.Handlers
         /// <summary>
         /// Id de entidad <see cref="Client"/>
         /// </summary>
-        public string IdCliente { get; set; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Numero de cuenta
         /// </summary>
-        public string NumeroCuenta { get; set; }
+        public string AccountNumber { get; set; }
 
         /// <summary>
         /// Tipo de cuenta
@@ -39,21 +39,21 @@ namespace EntryPoints.ReactiveWeb.Entities.Handlers
         /// <summary>
         /// Balance
         /// </summary>
-        public decimal Saldo { get; set; }
+        public decimal Balance { get; set; }
 
         /// <summary>
         /// Balance disponible
         /// </summary>
-        public decimal SaldoDisponible { get; set; }
+        public decimal AvailableBalance { get; set; }
 
         /// <summary>
         /// Exempt
         /// </summary>
-        public bool Exenta { get; set; }
+        public bool Exempt { get; set; }
 
         /// <summary>
         /// Lista de tipo <see cref="Transaction"/>
         /// </summary>
-        public List<TransacciónHandler> Transacciones { get; set; }
+        public List<TransactionHandler> Transactions { get; set; }
     }
 }

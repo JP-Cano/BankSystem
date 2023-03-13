@@ -15,8 +15,8 @@ namespace DrivenAdapters.Mongo.Adapters;
 /// </summary>
 public class TransactionRepositoryAdapter : ITransactionRepository
 {
-    private readonly IMongoCollection<TransacciónEntity> _mongoTransacciónCollection;
-    private readonly IMongoCollection<CuentaEntity> _mongoCuentaCollection;
+    private readonly IMongoCollection<TransactionEntity> _mongoTransacciónCollection;
+    private readonly IMongoCollection<AccountEntity> _mongoCuentaCollection;
     private readonly IMapper _mapper;
 
     /// <summary>
@@ -38,12 +38,12 @@ public class TransactionRepositoryAdapter : ITransactionRepository
     /// <returns></returns>
     public async Task<Transaction> FindByIdAsync(string transactionId)
     {
-        IAsyncCursor<TransacciónEntity> transacciónCursor =
+        IAsyncCursor<TransactionEntity> transacciónCursor =
             await _mongoTransacciónCollection.FindAsync(transacción => transacción.Id == transactionId);
 
-        TransacciónEntity transacciónSeleccionada = await transacciónCursor.FirstOrDefaultAsync();
+        TransactionEntity transactionSeleccionada = await transacciónCursor.FirstOrDefaultAsync();
 
-        return transacciónSeleccionada is null ? null : _mapper.Map<Transaction>(transacciónSeleccionada);
+        return transactionSeleccionada is null ? null : _mapper.Map<Transaction>(transactionSeleccionada);
     }
 
     /// <summary>
@@ -53,13 +53,13 @@ public class TransactionRepositoryAdapter : ITransactionRepository
     /// <returns></returns>
     public async Task<List<Transaction>> FindByAccountIdAsync(string accountId)
     {
-        IAsyncCursor<CuentaEntity> cuentaCursor =
+        IAsyncCursor<AccountEntity> cuentaCursor =
             await _mongoCuentaCollection.FindAsync(cuenta => cuenta.Id == accountId);
 
-        CuentaEntity cuentaEntity = await cuentaCursor.FirstOrDefaultAsync();
+        AccountEntity accountEntity = await cuentaCursor.FirstOrDefaultAsync();
 
-        IAsyncCursor<TransacciónEntity> transacciónCursor =
-            await _mongoTransacciónCollection.FindAsync(transacción => transacción.IdCuenta == cuentaEntity.Id);
+        IAsyncCursor<TransactionEntity> transacciónCursor =
+            await _mongoTransacciónCollection.FindAsync(transacción => transacción.AccountId == accountEntity.Id);
 
         return transacciónCursor
             .ToList()
@@ -74,7 +74,7 @@ public class TransactionRepositoryAdapter : ITransactionRepository
     /// <returns></returns>
     public async Task<Transaction> CreateAsync(Transaction transaction)
     {
-        var transacciónEntity = _mapper.Map<TransacciónEntity>(transaction);
+        var transacciónEntity = _mapper.Map<TransactionEntity>(transaction);
         await _mongoTransacciónCollection.InsertOneAsync(transacciónEntity);
 
         return _mapper.Map<Transaction>(transacciónEntity);

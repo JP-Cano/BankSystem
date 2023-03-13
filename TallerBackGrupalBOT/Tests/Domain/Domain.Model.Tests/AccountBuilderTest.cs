@@ -23,45 +23,45 @@ public class AccountBuilderTest
         return this;
     }
 
-    public AccountBuilderTest WithIdCliente(string id)
+    public AccountBuilderTest WithClientId(string id)
     {
         _idCliente = id;
         return this;
     }
 
-    public AccountBuilderTest WithNumeroDeCuenta(string numeroDeCuenta)
+    public AccountBuilderTest WithAccountNumber(string accountNumber)
     {
-        _accountNumber = numeroDeCuenta;
+        _accountNumber = accountNumber;
         return this;
     }
 
-    public AccountBuilderTest WithTipoCuenta(AccountType accountType)
+    public AccountBuilderTest WithAccountType(AccountType accountType)
     {
         _accountType = accountType;
         return this;
     }
 
-    public AccountBuilderTest WithEstadoCuenta(AccountStatus accountStatus)
+    public AccountBuilderTest WithAccountStatus(AccountStatus accountStatus)
     {
         _accountStatus = accountStatus;
         return this;
     }
 
-    public AccountBuilderTest WithSaldo(decimal saldo)
+    public AccountBuilderTest WithBalance(decimal balance)
     {
-        _balance = saldo;
+        _balance = balance;
         return this;
     }
 
-    public AccountBuilderTest WithSaldoDisponible(decimal saldoDisponible)
+    public AccountBuilderTest WithAvailableBalance(decimal availableBalance)
     {
-        _availableBalance = saldoDisponible;
+        _availableBalance = availableBalance;
         return this;
     }
 
-    public AccountBuilderTest WithExenta(bool exenta)
+    public AccountBuilderTest WithExempt(bool exempt)
     {
-        _exempt = exenta;
+        _exempt = exempt;
         return this;
     }
 

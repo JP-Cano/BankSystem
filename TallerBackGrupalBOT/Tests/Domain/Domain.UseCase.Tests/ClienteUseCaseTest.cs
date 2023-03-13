@@ -54,7 +54,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.UpdateEmail(client.Id, nuevoCorreo));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.CorreoElectronicoNoValido, result.code);
+            Assert.Equal((int)BusinessTypeException.InvalidEmail, result.code);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.UpdateEmail(client.Id, nuevoCorreo));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.AddProductToClient(client.Id, nuevaAccount));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]
@@ -156,7 +156,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.CreateClient(user.Id, client));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.UsuarioNoValido, result.code);
+            Assert.Equal((int)BusinessTypeException.InvalidUser, result.code);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.CreateClient(user.Id, client));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.IdentificacionDeClienteYaExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.ClientIdAlreadyExists, result.code);
         }
 
         [Fact]
@@ -198,7 +198,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.CreateClient(user.Id, client));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoEsMayorDeEdad, result.code);
+            Assert.Equal((int)BusinessTypeException.ClientIsUnderAge, result.code);
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.CreateClient(user.Id, client));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.CorreoElectronicoNoValido, result.code);
+            Assert.Equal((int)BusinessTypeException.InvalidEmail, result.code);
         }
 
         [Fact]
@@ -253,7 +253,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.DisableClient(client.Id));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]
@@ -288,7 +288,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.DisableClientDebt(client.Id));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]
@@ -325,7 +325,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.EnableClient(client.Id));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]
@@ -362,7 +362,7 @@ namespace Domain.UseCase.Tests
             var result = await Assert.ThrowsAsync<BusinessException>(() => clienteUseCase.EnableClientDebt(client.Id));
 
             // Assert
-            Assert.Equal((int)TipoExcepcionNegocio.ClienteNoExiste, result.code);
+            Assert.Equal((int)BusinessTypeException.NonexistentClient, result.code);
         }
 
         [Fact]

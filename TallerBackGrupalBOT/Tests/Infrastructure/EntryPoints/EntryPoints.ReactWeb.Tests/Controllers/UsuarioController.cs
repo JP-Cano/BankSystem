@@ -43,9 +43,9 @@ public class UsuarioControllerTest
     public async Task Crear_Retorna_Status200(string id, string nombreCompleto, Roles rol)
     {
         // Arrange
-        CrearUsuario crearUsuario = new CrearUsuario()
+        CreateUser createUser = new CreateUser()
         {
-            NombreCompleto = nombreCompleto,
+            FullName = nombreCompleto,
             Rol = rol
         };
 
@@ -62,7 +62,7 @@ public class UsuarioControllerTest
         _userController.ControllerContext.RouteData.Values.Add("action", "CreateAsync");
 
         // Act
-        var usuarioCreado = await _userController.Create(crearUsuario);
+        var usuarioCreado = await _userController.Create(createUser);
         var okObjectResult = usuarioCreado as OkObjectResult;
 
         // Assert

@@ -14,21 +14,21 @@ namespace DrivenAdapters.Mongo
         /// <summary>
         /// Colección de tipo <see cref="User"/>
         /// </summary>
-        public IMongoCollection<UsuarioEntity> Usuarios { get; }
+        public IMongoCollection<UserEntity> Usuarios { get; }
 
         /// <summary>
         /// Colección de tipo <see cref="Transaction"/>
         /// </summary>
-        public IMongoCollection<TransacciónEntity> Transacciones { get; }
+        public IMongoCollection<TransactionEntity> Transacciones { get; }
 
         /// <summary>
         /// Colección de tipo <see cref="Clientes"/>
         /// </summary>
-        public IMongoCollection<ClienteEntity> Clientes { get; }
+        public IMongoCollection<ClientEntity> Clientes { get; }
 
         /// <summary>
         /// Colección de tipo <see cref="Cuentas"/>
         /// </summary>
-        public IMongoCollection<CuentaEntity> Cuentas { get; }
+        public IMongoCollection<AccountEntity> Cuentas { get; }
     }
 }

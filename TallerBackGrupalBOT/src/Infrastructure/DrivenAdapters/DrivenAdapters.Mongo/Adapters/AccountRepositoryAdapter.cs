@@ -14,9 +14,9 @@ namespace DrivenAdapters.Mongo.Adapters
     /// </summary>
     public class AccountRepositoryAdapter : IAccountRepository
     {
-        private readonly IMongoCollection<CuentaEntity> _collectionCuenta;
+        private readonly IMongoCollection<AccountEntity> _collectionCuenta;
 
-        private readonly FilterDefinitionBuilder<CuentaEntity> filtro = Builders<CuentaEntity>.Filter;
+        private readonly FilterDefinitionBuilder<AccountEntity> filtro = Builders<AccountEntity>.Filter;
 
         private readonly IMapper _mapper;
 
@@ -41,7 +41,7 @@ namespace DrivenAdapters.Mongo.Adapters
         {
             await _collectionCuenta.ReplaceOneAsync(
                 filtro.Eq(x => x.Id, accountId),
-                _mapper.Map<CuentaEntity>(account));
+                _mapper.Map<AccountEntity>(account));
             return account;
         }
 
@@ -52,7 +52,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<Account> CreateAsync(Account account)
         {
-            var nuevaCuenta = _mapper.Map<CuentaEntity>(account);
+            var nuevaCuenta = _mapper.Map<AccountEntity>(account);
             await _collectionCuenta.InsertOneAsync(nuevaCuenta);
             return _mapper.Map<Account>(nuevaCuenta);
         }
@@ -64,7 +64,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<List<Account>> FindByClientAsync(string clientId)
         {
-            IAsyncCursor<CuentaEntity> cursorCuentas = await _collectionCuenta.FindAsync(Builders<CuentaEntity>.Filter.Empty);
+            IAsyncCursor<AccountEntity> cursorCuentas = await _collectionCuenta.FindAsync(Builders<AccountEntity>.Filter.Empty);
 
             List<Account> cuentasCliente = cursorCuentas.ToEnumerable().Select(cuentaEntity => _mapper.Map<Account>(cuentaEntity)).ToList();
             List<Account> cuentasClienteFiltradas = cuentasCliente.Where(cuenta => cuenta.ClientId == clientId).ToList();
@@ -79,7 +79,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<Account> FindByIdAsync(string accountId)
         {
-            var filter = Builders<CuentaEntity>.Filter.Eq(usuario => usuario.Id, accountId);
+            var filter = Builders<AccountEntity>.Filter.Eq(usuario => usuario.Id, accountId);
             var result = await _collectionCuenta.Find(filter).FirstOrDefaultAsync();
             return result is null ? null : _mapper.Map<Account>(result);
         }
@@ -90,7 +90,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<List<Account>> FindAllAsync()
         {
-            IAsyncCursor<CuentaEntity> cursorCuentas = await _collectionCuenta.FindAsync(Builders<CuentaEntity>.Filter.Empty);
+            IAsyncCursor<AccountEntity> cursorCuentas = await _collectionCuenta.FindAsync(Builders<AccountEntity>.Filter.Empty);
 
             List<Account> cuentas = cursorCuentas.ToEnumerable().Select(cuentaEntity => _mapper.Map<Account>(cuentaEntity)).ToList();
             if (cuentas is null)

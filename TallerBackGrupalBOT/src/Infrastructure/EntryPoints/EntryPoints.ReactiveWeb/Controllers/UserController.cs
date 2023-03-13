@@ -46,7 +46,7 @@ public class UserController : AppControllerBase<UserController>
         HandleRequest(async () =>
         {
             IEnumerable<User> usuarios = await _userUseCase.FindAll();
-            return _mapper.Map<IEnumerable<UsuarioHandler>>(usuarios);
+            return _mapper.Map<IEnumerable<UserHandler>>(usuarios);
         }, "");
 
     /// <summary>
@@ -62,13 +62,13 @@ public class UserController : AppControllerBase<UserController>
     /// <summary>
     /// Endpoint para crear entidad de tipo <see cref="User"/>
     /// </summary>
-    /// <param name="crearUsuario"></param>
+    /// <param name="createUser"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task<IActionResult> Create([FromBody] CrearUsuario crearUsuario) => HandleRequest(async () =>
+    public Task<IActionResult> Create([FromBody] CreateUser createUser) => HandleRequest(async () =>
             {
-                User userCreado = await _userUseCase.Create(_mapper.Map<User>(crearUsuario));
+                User userCreado = await _userUseCase.Create(_mapper.Map<User>(createUser));
 
-                return _mapper.Map<UsuarioHandler>(userCreado);
+                return _mapper.Map<UserHandler>(userCreado);
             }, "");
 }

@@ -42,7 +42,7 @@ namespace Domain.UseCase.Tests
         {
             _mockTransacciónRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerUnaTransacciónTest);
+                .ReturnsAsync(GetTransactionTest);
 
             var transacción = await _transactionUseCase.FindTransactionById(It.IsAny<string>());
 
@@ -55,12 +55,16 @@ namespace Domain.UseCase.Tests
         {
             _mockTransacciónRepository
                 .Setup(repository => repository.FindByAccountIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerListaTransacciónTest);
+                .ReturnsAsync(GetTransactionListTest);
+
+            _mockCuentaRepository
+                .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(new Account("0"));
 
             var transacciones = await _transactionUseCase.FindTransactionsByAccountId(It.IsAny<string>());
 
             Assert.NotNull(transacciones);
-            Assert.Equal(ObtenerListaTransacciónTest().Count, transacciones.Count);
+            Assert.Equal(GetTransactionListTest().Count, transacciones.Count);
             _mockTransacciónRepository.Verify(mock => mock.FindByAccountIdAsync((It.IsAny<string>())), Times.Once());
         }
 
@@ -69,20 +73,20 @@ namespace Domain.UseCase.Tests
         {
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(100000)
+                .WithValue(100000)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockCuentaRepository
                 .Setup(repository => repository.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockTransacciónRepository
                 .Setup(repository => repository.CreateAsync(It.IsAny<Transaction>()))
-                .ReturnsAsync(ObtenerUnaTransacciónTest);
+                .ReturnsAsync(GetTransactionTest);
 
             var transacción = await _transactionUseCase.MakeDeposit(transacciónTest);
 
@@ -90,7 +94,8 @@ namespace Domain.UseCase.Tests
 
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Once());
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
-            _mockCuentaRepository.Verify(mock => mock.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()), Times.Once());
+            _mockCuentaRepository.Verify(mock => mock.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()),
+                Times.Once());
         }
 
         [Fact]
@@ -98,20 +103,20 @@ namespace Domain.UseCase.Tests
         {
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaCanceladaTest);
+                .ReturnsAsync(GetCancelledAccountTest);
 
             _mockCuentaRepository
                 .Setup(repository => repository.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()))
-                .ReturnsAsync(ObtenerCuentaCanceladaTest);
+                .ReturnsAsync(GetCancelledAccountTest);
 
             _mockTransacciónRepository
                 .Setup(repository => repository.CreateAsync(It.IsAny<Transaction>()))
-                .ReturnsAsync(ObtenerUnaTransacciónTest);
+                .ReturnsAsync(GetTransactionTest);
 
             BusinessException businessException = await Assert.ThrowsAsync<BusinessException>(async () =>
-                await _transactionUseCase.MakeDeposit(ObtenerUnaTransacciónTest()));
+                await _transactionUseCase.MakeDeposit(GetTransactionTest()));
 
-            Assert.Equal((int)TipoExcepcionNegocio.EstadoCuentaCancelada, businessException.code);
+            Assert.Equal((int)BusinessTypeException.AccountStateCancelled, businessException.code);
         }
 
         [Fact]
@@ -119,20 +124,20 @@ namespace Domain.UseCase.Tests
         {
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(100000)
+                .WithValue(100000)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockCuentaRepository
                 .Setup(repository => repository.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockTransacciónRepository
                 .Setup(repository => repository.CreateAsync(It.IsAny<Transaction>()))
-                .ReturnsAsync(ObtenerUnaTransacciónTest);
+                .ReturnsAsync(GetTransactionTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -144,22 +149,23 @@ namespace Domain.UseCase.Tests
 
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Once());
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
-            _mockCuentaRepository.Verify(mock => mock.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()), Times.Once());
+            _mockCuentaRepository.Verify(mock => mock.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()),
+                Times.Once());
         }
 
         [Fact]
         public async Task RealizarRetiroCuentaAhorros_Exenta_MontoARetirarMayorSaldo_LanzaExcepción()
         {
-            var valorRetiroMayorASaldo = ObtenerCuentaExentaAhorrosTest().Balance + 1;
+            var valorRetiroMayorASaldo = GetExemptSavingAccountTest().Balance + 1;
 
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(valorRetiroMayorASaldo)
+                .WithValue(valorRetiroMayorASaldo)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -169,7 +175,7 @@ namespace Domain.UseCase.Tests
                 await Assert.ThrowsAsync<BusinessException>(async () =>
                     await _transactionUseCase.MakeWithdrawal(transacciónTest));
 
-            Assert.Equal((int)TipoExcepcionNegocio.ValorRetiroNoPermitido, exception.code);
+            Assert.Equal((int)BusinessTypeException.ForbiddenWithdrawalValue, exception.code);
 
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Never());
@@ -181,16 +187,16 @@ namespace Domain.UseCase.Tests
         public async Task RealizarRetiroCuentaCorriente_Exenta_MontoARetiraMayorSaldoMasSobregiro_LanzaExcepción()
         {
             var valorRetiroMayorASaldoMasSobregiro =
-                ObtenerCuentaExentaCorrienteTest().Balance + _appSettings.ValorSobregiro + 1;
+                GetExemptRegularAccountTest().Balance + _appSettings.ValorSobregiro + 1;
 
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(valorRetiroMayorASaldoMasSobregiro)
+                .WithValue(valorRetiroMayorASaldoMasSobregiro)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaExentaCorrienteTest);
+                .ReturnsAsync(GetExemptRegularAccountTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -200,7 +206,7 @@ namespace Domain.UseCase.Tests
                 await Assert.ThrowsAsync<BusinessException>(async () =>
                     await _transactionUseCase.MakeWithdrawal(transacciónTest));
 
-            Assert.Equal((int)TipoExcepcionNegocio.ValorRetiroNoPermitido, exception.code);
+            Assert.Equal((int)BusinessTypeException.ForbiddenWithdrawalValue, exception.code);
 
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Never());
@@ -211,16 +217,16 @@ namespace Domain.UseCase.Tests
         [Fact]
         public async Task RealizarRetiroCuentaAhorros_NoExenta_MontoARetirarIgualSaldo_LanzaExcepción()
         {
-            var valorRetiroIgualSaldo = ObtenerCuentaNoExentaAhorrosTest().Balance;
+            var valorRetiroIgualSaldo = GetNotExemptSavingAccountTest().Balance;
 
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(valorRetiroIgualSaldo)
+                .WithValue(valorRetiroIgualSaldo)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaNoExentaAhorrosTest);
+                .ReturnsAsync(GetNotExemptSavingAccountTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -230,7 +236,7 @@ namespace Domain.UseCase.Tests
                 await Assert.ThrowsAsync<BusinessException>(async () =>
                     await _transactionUseCase.MakeWithdrawal(transacciónTest));
 
-            Assert.Equal((int)TipoExcepcionNegocio.ValorRetiroNoPermitido, exception.code);
+            Assert.Equal((int)BusinessTypeException.ForbiddenWithdrawalValue, exception.code);
 
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Never());
@@ -242,16 +248,16 @@ namespace Domain.UseCase.Tests
         public async Task RealizarRetiroCuentaCorriente_NoExenta_MontoARetiraIgualSaldoMasSobregiro_LanzaExcepción()
         {
             var valorRetiroIgualASaldoMasSobregiro =
-                ObtenerCuentaNoExentaCorrienteTest().Balance + _appSettings.ValorSobregiro + 1;
+                GetNotExemptRegularAccountTest().Balance + _appSettings.ValorSobregiro + 1;
 
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(valorRetiroIgualASaldoMasSobregiro)
+                .WithValue(valorRetiroIgualASaldoMasSobregiro)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaNoExentaCorrienteTest);
+                .ReturnsAsync(GetNotExemptRegularAccountTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -261,7 +267,7 @@ namespace Domain.UseCase.Tests
                 await Assert.ThrowsAsync<BusinessException>(async () =>
                     await _transactionUseCase.MakeWithdrawal(transacciónTest));
 
-            Assert.Equal((int)TipoExcepcionNegocio.ValorRetiroNoPermitido, exception.code);
+            Assert.Equal((int)BusinessTypeException.ForbiddenWithdrawalValue, exception.code);
 
             _mockCuentaRepository.Verify(mock => mock.FindByIdAsync((It.IsAny<string>())), Times.Once());
             _mockTransacciónRepository.Verify(mock => mock.CreateAsync((It.IsAny<Transaction>())), Times.Never());
@@ -275,20 +281,20 @@ namespace Domain.UseCase.Tests
             var idCuentaReceptor = "2";
             var transacciónTest = new TransactionBuilderTest()
                 .WithId("1")
-                .WithValor(100000)
+                .WithValue(100000)
                 .Build();
 
             _mockCuentaRepository
                 .Setup(repository => repository.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockCuentaRepository
                 .Setup(repository => repository.UpdateAsync(It.IsAny<string>(), It.IsAny<Account>()))
-                .ReturnsAsync(ObtenerCuentaExentaAhorrosTest);
+                .ReturnsAsync(GetExemptSavingAccountTest);
 
             _mockTransacciónRepository
                 .Setup(repository => repository.CreateAsync(It.IsAny<Transaction>()))
-                .ReturnsAsync(ObtenerUnaTransacciónTest);
+                .ReturnsAsync(GetTransactionTest);
 
             _mockOptions
                 .Setup(config => config.Value)
@@ -306,61 +312,61 @@ namespace Domain.UseCase.Tests
 
         #region Private Methods
 
-        private Transaction ObtenerUnaTransacciónTest() =>
+        private Transaction GetTransactionTest() =>
             new TransactionBuilderTest()
                 .WithId("1")
-                .WithIdCuenta("4300000000")
-                .WithFechaMovimiento(DateTime.Now)
-                .WithTipoTransacción(TransactionType.Deposit)
-                .WithValor(100000)
-                .WithSaldoInicial(1000000)
-                .WithSaldoFinal(1100000)
+                .WithAccountId("4300000000")
+                .WithMovementDate(DateTime.Now)
+                .WithTransactionType(TransactionType.Deposit)
+                .WithValue(100000)
+                .WithInitialBalance(1000000)
+                .WithFinalBalance(1100000)
                 .Build();
 
-        private List<Transaction> ObtenerListaTransacciónTest() => new()
+        private List<Transaction> GetTransactionListTest() => new()
         {
             new TransactionBuilderTest()
                 .WithId("1")
-                .WithIdCuenta("4600000000")
-                .WithFechaMovimiento(DateTime.Now)
-                .WithTipoTransacción(TransactionType.Deposit)
-                .WithValor(100000)
-                .WithSaldoInicial(1000000)
-                .WithSaldoFinal(1100000)
+                .WithAccountId("4600000000")
+                .WithMovementDate(DateTime.Now)
+                .WithTransactionType(TransactionType.Deposit)
+                .WithValue(100000)
+                .WithInitialBalance(1000000)
+                .WithFinalBalance(1100000)
                 .Build(),
             new TransactionBuilderTest()
                 .WithId("2")
-                .WithIdCuenta("2300000000")
-                .WithFechaMovimiento(DateTime.Now)
-                .WithTipoTransacción(TransactionType.Withdrawal)
-                .WithValor(100000)
-                .WithSaldoInicial(1000000)
-                .WithSaldoFinal(900000)
-                .WithDescripción("Se Realizo Withdrawal por $100000 desde la cuenta con ID 2")
+                .WithAccountId("2300000000")
+                .WithMovementDate(DateTime.Now)
+                .WithTransactionType(TransactionType.Withdrawal)
+                .WithValue(100000)
+                .WithInitialBalance(1000000)
+                .WithFinalBalance(900000)
+                .WithDescription("Se Realizo Withdrawal por $100000 desde la cuenta con ID 2")
                 .Build(),
         };
 
-        private Account ObtenerCuentaNoExentaAhorrosTest() => new AccountBuilderTest()
+        private Account GetNotExemptSavingAccountTest() => new AccountBuilderTest()
             .WithId("1")
-            .WithIdCliente("123456789")
-            .WithNumeroDeCuenta("4600000000")
-            .WithTipoCuenta(AccountType.Savings)
-            .WithEstadoCuenta(AccountStatus.Active)
-            .WithSaldo(1000000)
-            .WithSaldoDisponible(996000)
-            .WithExenta(false)
+            .WithClientId("123456789")
+            .WithAccountNumber("4600000000")
+            .WithAccountType(AccountType.Savings)
+            .WithAccountStatus(AccountStatus.Active)
+            .WithBalance(1000000)
+            .WithAvailableBalance(996000)
+            .WithExempt(false)
             .Build();
 
-        private Account ObtenerCuentaCanceladaTest()
+        private Account GetCancelledAccountTest()
         {
             Account account = new AccountBuilderTest()
                 .WithId("1")
-                .WithIdCliente("123456789")
-                .WithNumeroDeCuenta("4600000000")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithSaldo(0)
-                .WithSaldoDisponible(0)
-                .WithExenta(false)
+                .WithClientId("123456789")
+                .WithAccountNumber("4600000000")
+                .WithAccountType(AccountType.Savings)
+                .WithBalance(0)
+                .WithAvailableBalance(0)
+                .WithExempt(false)
                 .Build();
 
             account.CancelAccount();
@@ -368,37 +374,37 @@ namespace Domain.UseCase.Tests
             return account;
         }
 
-        private Account ObtenerCuentaExentaAhorrosTest() => new AccountBuilderTest()
+        private Account GetExemptSavingAccountTest() => new AccountBuilderTest()
             .WithId("1")
-            .WithIdCliente("123456789")
-            .WithNumeroDeCuenta("4600000000")
-            .WithTipoCuenta(AccountType.Savings)
-            .WithEstadoCuenta(AccountStatus.Active)
-            .WithSaldo(1000000)
-            .WithSaldoDisponible(996000)
-            .WithExenta(true)
+            .WithClientId("123456789")
+            .WithAccountNumber("4600000000")
+            .WithAccountType(AccountType.Savings)
+            .WithAccountStatus(AccountStatus.Active)
+            .WithBalance(1000000)
+            .WithAvailableBalance(996000)
+            .WithExempt(true)
             .Build();
 
-        private Account ObtenerCuentaNoExentaCorrienteTest() => new AccountBuilderTest()
+        private Account GetNotExemptRegularAccountTest() => new AccountBuilderTest()
             .WithId("1")
-            .WithIdCliente("123456789")
-            .WithNumeroDeCuenta("4600000000")
-            .WithTipoCuenta(AccountType.Regular)
-            .WithEstadoCuenta(AccountStatus.Active)
-            .WithSaldo(1000000)
-            .WithSaldoDisponible(996000)
-            .WithExenta(false)
+            .WithClientId("123456789")
+            .WithAccountNumber("4600000000")
+            .WithAccountType(AccountType.Regular)
+            .WithAccountStatus(AccountStatus.Active)
+            .WithBalance(1000000)
+            .WithAvailableBalance(996000)
+            .WithExempt(false)
             .Build();
 
-        private Account ObtenerCuentaExentaCorrienteTest() => new AccountBuilderTest()
+        private Account GetExemptRegularAccountTest() => new AccountBuilderTest()
             .WithId("1")
-            .WithIdCliente("123456789")
-            .WithNumeroDeCuenta("4600000000")
-            .WithTipoCuenta(AccountType.Regular)
-            .WithEstadoCuenta(AccountStatus.Active)
-            .WithSaldo(1000000)
-            .WithSaldoDisponible(996000)
-            .WithExenta(true)
+            .WithClientId("123456789")
+            .WithAccountNumber("4600000000")
+            .WithAccountType(AccountType.Regular)
+            .WithAccountStatus(AccountStatus.Active)
+            .WithBalance(1000000)
+            .WithAvailableBalance(996000)
+            .WithExempt(true)
             .Build();
 
         #endregion Private Methods

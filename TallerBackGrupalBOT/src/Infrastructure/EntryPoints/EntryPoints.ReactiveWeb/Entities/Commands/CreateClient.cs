@@ -1,5 +1,4 @@
-﻿using Domain.Model.Entities.Clientes;
-using System;
+﻿using System;
 using Domain.Model.Entities.Clients;
 
 namespace EntryPoints.ReactiveWeb.Entities.Commands
@@ -7,43 +6,43 @@ namespace EntryPoints.ReactiveWeb.Entities.Commands
     /// <summary>
     /// DTO de <see cref="Client"/> para crear un cliente
     /// </summary>
-    public class CrearCliente
+    public class CreateClient
     {
         /// <summary>
         /// Constructor vació
         /// </summary>
-        public CrearCliente()
+        public CreateClient()
         {
         }
 
         /// <summary>
         /// Tipo de identificación
         /// </summary>
-        public IdType TipoIdentificacion { get; set; }
+        public IdType IdType { get; set; }
 
         /// <summary>
         /// Numero de identificación
         /// </summary>
-        public string NumeroIdentificacion { get; set; }
+        public string IdNumber { get; set; }
 
         /// <summary>
         /// Names del cliente
         /// </summary>
-        public string Nombres { get; set; }
+        public string Names { get; set; }
 
         /// <summary>
         /// LastNames del cliente
         /// </summary>
-        public string Apellidos { get; set; }
+        public string LastNames { get; set; }
 
         /// <summary>
         /// Correo electrónico
         /// </summary>
-        public string CorreoElectronico { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Date de nacimiento
         /// </summary>
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime Birthdate { get; set; }
     }
 }

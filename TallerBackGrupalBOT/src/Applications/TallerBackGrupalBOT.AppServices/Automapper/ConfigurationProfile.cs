@@ -25,18 +25,18 @@ namespace TallerBackGrupalBOT.AppServices.Automapper
         {
             #region Domain Models to Mongo Documents
 
-            CreateMap<User, UsuarioEntity>().ReverseMap();
-            CreateMap<Transaction, TransacciónEntity>().ReverseMap();
-            CreateMap<Client, ClienteEntity>().ReverseMap();
-            CreateMap<Account, CuentaEntity>().ReverseMap();
+            CreateMap<User, UserEntity>().ReverseMap();
+            CreateMap<Transaction, TransactionEntity>().ReverseMap();
+            CreateMap<Client, ClientEntity>().ReverseMap();
+            CreateMap<Account, AccountEntity>().ReverseMap();
 
             #endregion Domain Models to Mongo Documents
 
             #region Domain Models To REST Handlers
 
-            CreateMap<User, UsuarioHandler>();
+            CreateMap<User, UserHandler>();
 
-            CreateMap<Transaction, TransacciónHandler>().ReverseMap();
+            CreateMap<Transaction, TransactionHandler>().ReverseMap();
 
             CreateMap<Account, CuentaHandler>().ReverseMap();
 
@@ -44,24 +44,24 @@ namespace TallerBackGrupalBOT.AppServices.Automapper
 
             #region REST Commands to Domain Models
 
-            CreateMap<CrearUsuario, User>();
+            CreateMap<CreateUser, User>();
 
-            CreateMap<CrearCliente, Client>();
+            CreateMap<CreateClient, Client>();
 
-            CreateMap<CrearTransacción, Transaction>();
+            CreateMap<CreateTransaction, Transaction>();
 
             CreateMap<Account, CuentaHandler>().ReverseMap();
 
-            CreateMap<CrearCuenta, Account>();
+            CreateMap<CreateAccount, Account>();
 
-            CreateMap<EstadosCuenta, Account>();
+            CreateMap<AccountState, Account>();
 
             #endregion REST Commands to Domain Models
 
             #region GRPc command to HTTP command
 
-            CreateMap<CrearUsuarioRequest, CrearUsuario>();
-            CreateMap<CrearClienteProto, CrearCliente>();
+            CreateMap<CrearUsuarioRequest, CreateUser>();
+            CreateMap<CrearClienteProto, CreateClient>();
 
             #endregion GRPc command to HTTP command
 

@@ -5,12 +5,12 @@ namespace EntryPoints.ReactiveWeb.Entities.Commands;
 /// <summary>
 /// Comando para crear una entidad de tipo <see cref="User"/>
 /// </summary>
-public class CrearUsuario
+public class CreateUser
 {
     /// <summary>
     /// Nombre completo
     /// </summary>
-    public string NombreCompleto { get; set; }
+    public string FullName { get; set; }
 
     /// <summary>
     /// Rol

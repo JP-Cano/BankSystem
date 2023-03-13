@@ -46,7 +46,7 @@ public class TransactionController : AppControllerBase<TransactionController>
         HandleRequest(async () =>
         {
             Transaction transaction = await _transactionUseCase.FindTransactionById(id);
-            return _mapper.Map<TransacciónHandler>(transaction);
+            return _mapper.Map<TransactionHandler>(transaction);
         }, "");
 
     /// <summary>
@@ -60,53 +60,53 @@ public class TransactionController : AppControllerBase<TransactionController>
         HandleRequest(async () =>
         {
             IEnumerable<Transaction> transacciones = await _transactionUseCase.FindTransactionsByAccountId(id);
-            return _mapper.Map<IEnumerable<TransacciónHandler>>(transacciones);
+            return _mapper.Map<IEnumerable<TransactionHandler>>(transacciones);
         }, "");
 
     /// <summary>
     /// Endpoint para realizar una consignación
     /// </summary>
-    /// <param name="crearTransacción"></param>
+    /// <param name="createTransaction"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task<IActionResult> MakeDeposit([FromBody] CrearTransacción crearTransacción) =>
+    public Task<IActionResult> MakeDeposit([FromBody] CreateTransaction createTransaction) =>
         HandleRequest(async () =>
         {
             Transaction transaction =
-                await _transactionUseCase.MakeDeposit(_mapper.Map<Transaction>(crearTransacción));
+                await _transactionUseCase.MakeDeposit(_mapper.Map<Transaction>(createTransaction));
 
-            return _mapper.Map<TransacciónHandler>(transaction);
+            return _mapper.Map<TransactionHandler>(transaction);
         }, "");
 
     /// <summary>
     /// Endpoint para realizar un retiro
     /// </summary>
-    /// <param name="crearTransacción"></param>
+    /// <param name="createTransaction"></param>
     /// <returns></returns>
     [HttpPost]
-    public Task<IActionResult> MakeWithdrawal([FromBody] CrearTransacción crearTransacción) =>
+    public Task<IActionResult> MakeWithdrawal([FromBody] CreateTransaction createTransaction) =>
         HandleRequest(async () =>
         {
             Transaction transaction =
-                await _transactionUseCase.MakeWithdrawal(_mapper.Map<Transaction>(crearTransacción));
+                await _transactionUseCase.MakeWithdrawal(_mapper.Map<Transaction>(createTransaction));
 
-            return _mapper.Map<TransacciónHandler>(transaction);
+            return _mapper.Map<TransactionHandler>(transaction);
         }, "");
 
     /// <summary>
     /// Endpoint para realizar una transferencia
     /// </summary>
-    /// <param name="crearTransacción"></param>
+    /// <param name="createTransaction"></param>
     /// <param name="idCuentaReceptor"></param>
     /// <returns></returns>
     [HttpPost("{idCuentaReceptor}")]
-    public Task<IActionResult> MakeTransfer([FromBody] CrearTransacción crearTransacción,
+    public Task<IActionResult> MakeTransfer([FromBody] CreateTransaction createTransaction,
         [FromRoute] string idCuentaReceptor) =>
         HandleRequest(async () =>
         {
             Transaction transaction =
-                await _transactionUseCase.MakeTransfer(_mapper.Map<Transaction>(crearTransacción), idCuentaReceptor);
+                await _transactionUseCase.MakeTransfer(_mapper.Map<Transaction>(createTransaction), idCuentaReceptor);
 
-            return _mapper.Map<TransacciónHandler>(transaction);
+            return _mapper.Map<TransactionHandler>(transaction);
         }, "");
 }

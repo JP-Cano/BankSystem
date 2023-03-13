@@ -68,7 +68,7 @@ public class UsuarioUseCaseTest
             await Assert.ThrowsAsync<BusinessException>(async () =>
                 await _userUseCase.FindById(It.IsAny<string>()));
 
-        Assert.Equal((int)TipoExcepcionNegocio.EntidadNoEncontrada, businessException.code);
+        Assert.Equal((int)BusinessTypeException.EntityNotFound, businessException.code);
         _mockUsuarioRepository.Verify(mock => mock.FindByIdAsync(It.IsAny<string>()), Times.Once);
     }
 

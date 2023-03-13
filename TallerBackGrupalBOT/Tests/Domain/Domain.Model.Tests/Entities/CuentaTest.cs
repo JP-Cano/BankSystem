@@ -35,10 +35,10 @@ namespace Domain.Model.Tests.Entities
 
             var cuentaTest = new AccountBuilderTest()
                 .WithId("01")
-                .WithIdCliente("001")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("001")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignInitialBalance(100000);
@@ -52,10 +52,10 @@ namespace Domain.Model.Tests.Entities
             var valor = 100000;
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("2")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("2")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignInitialBalance(2000);
@@ -70,12 +70,12 @@ namespace Domain.Model.Tests.Entities
             decimal saldoDisponible = 996000M;
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("3")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
-                .WithSaldo(1000000)
-                .WithSaldoDisponible(0)
+                .WithClientId("3")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
+                .WithBalance(1000000)
+                .WithAvailableBalance(0)
                 .Build();
 
             cuentaTest.CalculateAvailableBalance(valorGMF);
@@ -90,11 +90,11 @@ namespace Domain.Model.Tests.Entities
             decimal saldoDisponible = 990000M;
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("3")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
-                .WithSaldo(1000000)
+                .WithClientId("3")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
+                .WithBalance(1000000)
                 .Build();
 
             cuentaTest.CalculateAvailableBalance(valorGMF);
@@ -108,9 +108,9 @@ namespace Domain.Model.Tests.Entities
             var numeroCuenta = "46-";
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("4")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("4")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignAccountNumber();
@@ -124,9 +124,9 @@ namespace Domain.Model.Tests.Entities
             var numeroCuenta = "23-";
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("4")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("4")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignAccountNumber();
@@ -140,9 +140,9 @@ namespace Domain.Model.Tests.Entities
             var numeroCuenta = "23-";
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("4")
-                .WithTipoCuenta(AccountType.Regular)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("4")
+                .WithAccountType(AccountType.Regular)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignAccountNumber();
@@ -156,9 +156,9 @@ namespace Domain.Model.Tests.Entities
             var numeroCuenta = "46-";
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("4")
-                .WithTipoCuenta(AccountType.Regular)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("4")
+                .WithAccountType(AccountType.Regular)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AssignAccountNumber();
@@ -170,11 +170,11 @@ namespace Domain.Model.Tests.Entities
         public void MarcarCuentaExenta_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("5")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
-                .WithExenta(false)
+                .WithClientId("5")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
+                .WithExempt(false)
                 .Build();
 
             cuentaTest.SetAccountAsExempt();
@@ -193,10 +193,10 @@ namespace Domain.Model.Tests.Entities
             var modificacionTest = new Modification(ModificationType.Enable, usuarioTest);
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AddModification(modificacionTest);
@@ -216,10 +216,10 @@ namespace Domain.Model.Tests.Entities
             var modificacionTestExpect = new Modification(ModificationType.Enable, usuarioTest);
 
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.AddModification(modificacionTest);
@@ -231,11 +231,11 @@ namespace Domain.Model.Tests.Entities
         public void ActualizarSaldo_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
-                .WithSaldo(2000)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
+                .WithBalance(2000)
                 .Build();
 
             var nuevoSaldo = cuentaTest.Balance + 3000;
@@ -249,11 +249,11 @@ namespace Domain.Model.Tests.Entities
         public void ActualizarSaldo_Failure()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithTipoCuenta(AccountType.Savings)
-                .WithEstadoCuenta(AccountStatus.Active)
-                .WithSaldo(2000)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountType(AccountType.Savings)
+                .WithAccountStatus(AccountStatus.Active)
+                .WithBalance(2000)
                 .Build();
 
             var nuevoSaldo = cuentaTest.Balance + 3000;
@@ -267,9 +267,9 @@ namespace Domain.Model.Tests.Entities
         public void EstaActiva_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             var result = cuentaTest.IsActive();
@@ -281,9 +281,9 @@ namespace Domain.Model.Tests.Entities
         public void EstaInactiva_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             var result = cuentaTest.IsInactive();
@@ -295,9 +295,9 @@ namespace Domain.Model.Tests.Entities
         public void EstaCancelada_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             var result = cuentaTest.IsCancelled();
@@ -309,9 +309,9 @@ namespace Domain.Model.Tests.Entities
         public void HabilitarCuenta_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Inactive)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Inactive)
                 .Build();
 
             cuentaTest.EnableAccount();
@@ -323,9 +323,9 @@ namespace Domain.Model.Tests.Entities
         public void DehabilitarCuenta_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.DisableAccount();
@@ -337,9 +337,9 @@ namespace Domain.Model.Tests.Entities
         public void CancelarCuenta_Exitoso()
         {
             var cuentaTest = new AccountBuilderTest()
-                .WithIdCliente("6")
-                .WithNumeroDeCuenta("1")
-                .WithEstadoCuenta(AccountStatus.Active)
+                .WithClientId("6")
+                .WithAccountNumber("1")
+                .WithAccountStatus(AccountStatus.Active)
                 .Build();
 
             cuentaTest.CancelAccount();

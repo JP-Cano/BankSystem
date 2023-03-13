@@ -5,7 +5,7 @@ namespace EntryPoints.ReactiveWeb.Entities.Commands
     /// <summary>
     /// Comando para crear una entidad de tipo <see cref="Account"/>
     /// </summary>
-    public class EstadosCuenta
+    public class AccountState
     {
         /// <summary>
         /// Id

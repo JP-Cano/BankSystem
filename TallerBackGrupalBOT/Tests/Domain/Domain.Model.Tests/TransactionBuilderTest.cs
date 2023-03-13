@@ -28,45 +28,45 @@ namespace Domain.Model.Tests
             return this;
         }
 
-        public TransactionBuilderTest WithIdCuenta(string idCuenta)
+        public TransactionBuilderTest WithAccountId(string accountId)
         {
-            _accountId = idCuenta;
+            _accountId = accountId;
             return this;
         }
 
-        public TransactionBuilderTest WithFechaMovimiento(DateTime fecha)
+        public TransactionBuilderTest WithMovementDate(DateTime date)
         {
-            _movementDate = fecha;
+            _movementDate = date;
             return this;
         }
 
-        public TransactionBuilderTest WithTipoTransacción(TransactionType transactionType)
+        public TransactionBuilderTest WithTransactionType(TransactionType transactionType)
         {
             _transactionType = transactionType;
             return this;
         }
 
-        public TransactionBuilderTest WithValor(decimal valor)
+        public TransactionBuilderTest WithValue(decimal value)
         {
-            _value = valor;
+            _value = value;
             return this;
         }
 
-        public TransactionBuilderTest WithSaldoInicial(decimal saldoInicial)
+        public TransactionBuilderTest WithInitialBalance(decimal initialBalance)
         {
-            _initialBalance = saldoInicial;
+            _initialBalance = initialBalance;
             return this;
         }
 
-        public TransactionBuilderTest WithSaldoFinal(decimal saldoFinal)
+        public TransactionBuilderTest WithFinalBalance(decimal finalBalance)
         {
-            _finalBalance = saldoFinal;
+            _finalBalance = finalBalance;
             return this;
         }
 
-        public TransactionBuilderTest WithDescripción(string descripción)
+        public TransactionBuilderTest WithDescription(string description)
         {
-            _description = descripción;
+            _description = description;
             return this;
         }
     }

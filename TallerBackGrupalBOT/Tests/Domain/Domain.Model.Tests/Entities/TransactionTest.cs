@@ -5,16 +5,16 @@ using Xunit;
 namespace Domain.Model.Tests.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class TransacciónTest
+    public class TransactionTest
     {
         [Fact]
         public void GenerarDescripción_Exitosa_TipoTransacciónConsignación()
         {
-            var descripciónEsperada = "Se Realizo Deposit por $100000 a la cuenta con ID 1";
+            var descripciónEsperada = "Deposit made of $100000 to account with ID 1";
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithTipoTransacción(TransactionType.Deposit)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithTransactionType(TransactionType.Deposit)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.GenerateDescription();
@@ -25,11 +25,11 @@ namespace Domain.Model.Tests.Entities
         [Fact]
         public void GenerarDescripción_Exitosa_TipoTransacciónRetiro()
         {
-            var descripciónEsperada = "Se Realizo Withdrawal por $200000 desde la cuenta con ID 1";
+            var descripciónEsperada = "Withdrawal made of $200000 from account with ID 1";
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(200000)
-                .WithTipoTransacción(TransactionType.Withdrawal)
-                .WithIdCuenta("1")
+                .WithValue(200000)
+                .WithTransactionType(TransactionType.Withdrawal)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.GenerateDescription();
@@ -41,11 +41,11 @@ namespace Domain.Model.Tests.Entities
         public void GenerarDescripción_Exitosa_TipoTransacciónTransferencia()
         {
             var idCuentaDestino = "2";
-            var descripciónEsperada = "Se Realizo Transfer por $100000 desde la cuenta con ID 1 a la cuenta con ID 2";
+            var descripciónEsperada = "Transfer made of $100000 from account with ID 1 to account with ID 2";
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithTipoTransacción(TransactionType.Transfer)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithTransactionType(TransactionType.Transfer)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.GenerateDescription(idCuentaDestino);
@@ -59,8 +59,8 @@ namespace Domain.Model.Tests.Entities
             var tipoAsignar = TransactionType.Deposit;
 
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.AssignTransactionType(tipoAsignar);
@@ -72,8 +72,8 @@ namespace Domain.Model.Tests.Entities
         public void AsignarAsignarFechaMovimiento_Exitoso()
         {
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.AddMovementDate();
@@ -87,8 +87,8 @@ namespace Domain.Model.Tests.Entities
             var valor = 100000;
 
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithAccountId("1")
                 .Build();
 
             transacciónTest.AssignInitialBalance(valor);
@@ -102,9 +102,9 @@ namespace Domain.Model.Tests.Entities
             var valor = 100000;
 
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithSaldoInicial(500000)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithInitialBalance(500000)
+                .WithAccountId("1")
                 .Build();
 
             var saldoFinalEsperado = transacciónTest.InitialBalance - valor;
@@ -120,9 +120,9 @@ namespace Domain.Model.Tests.Entities
             var valor = 100000;
 
             var transacciónTest = new TransactionBuilderTest()
-                .WithValor(100000)
-                .WithSaldoInicial(500000)
-                .WithIdCuenta("1")
+                .WithValue(100000)
+                .WithInitialBalance(500000)
+                .WithAccountId("1")
                 .Build();
 
             var saldoFinalEsperado = transacciónTest.InitialBalance + valor;

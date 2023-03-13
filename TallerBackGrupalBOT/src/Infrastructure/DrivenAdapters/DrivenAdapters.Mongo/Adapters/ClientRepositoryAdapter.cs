@@ -15,9 +15,9 @@ namespace DrivenAdapters.Mongo.Adapters
     /// </summary>
     public class ClientRepositoryAdapter : IClientRepository
     {
-        private readonly FilterDefinitionBuilder<ClienteEntity> filtro = Builders<ClienteEntity>.Filter;
+        private readonly FilterDefinitionBuilder<ClientEntity> filtro = Builders<ClientEntity>.Filter;
 
-        private readonly IMongoCollection<ClienteEntity> _collection;
+        private readonly IMongoCollection<ClientEntity> _collection;
 
         private readonly IMapper _mapper;
 
@@ -42,7 +42,7 @@ namespace DrivenAdapters.Mongo.Adapters
         {
             await _collection.ReplaceOneAsync(
                 filtro.Eq(x => x.Id, clientId),
-                _mapper.Map<ClienteEntity>(client));
+                _mapper.Map<ClientEntity>(client));
 
             return client;
         }
@@ -55,7 +55,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<Client> CreateAsync(string userId, Client client)
         {
-            var nuevoCliente = _mapper.Map<ClienteEntity>(client);
+            var nuevoCliente = _mapper.Map<ClientEntity>(client);
             await _collection.InsertOneAsync(nuevoCliente);
 
             return _mapper.Map<Client>(nuevoCliente);
@@ -68,7 +68,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<Client> FindByIdAsync(string clientId)
         {
-            var filtroMetodo = Builders<ClienteEntity>.Filter.Eq(x => x.Id, clientId);
+            var filtroMetodo = Builders<ClientEntity>.Filter.Eq(x => x.Id, clientId);
             var cursor = await _collection.Find(filtroMetodo).FirstOrDefaultAsync();
             return _mapper.Map<Client>(cursor);
         }
@@ -80,8 +80,8 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<Client> FindByIdNumber(string idNumber)
         {
-            var cursor = await _collection.FindAsync<ClienteEntity>(
-                filtro.Eq(x => x.NumeroIdentificacion, idNumber));
+            var cursor = await _collection.FindAsync<ClientEntity>(
+                filtro.Eq(x => x.IdNumber, idNumber));
             return _mapper.Map<Client>(cursor.FirstOrDefault());
         }
 
@@ -91,7 +91,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <returns></returns>
         public async Task<List<Client>> FindAllAsync()
         {
-            var cursor = await _collection.FindAsync<ClienteEntity>(_ => true);
+            var cursor = await _collection.FindAsync<ClientEntity>(_ => true);
             return cursor.ToList()
                 .Select(x => _mapper.Map<Client>(x))
                 .ToList();

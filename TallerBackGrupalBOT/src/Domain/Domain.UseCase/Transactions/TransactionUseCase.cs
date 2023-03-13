@@ -46,8 +46,8 @@ namespace Domain.UseCase.Transactions
             Transaction transaction = await _transactionRepository.FindByIdAsync(transactionId);
             if (transaction is null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.EntidadNoEncontrada.GetDescription(),
-                    (int)TipoExcepcionNegocio.EntidadNoEncontrada);
+                throw new BusinessException(BusinessTypeException.EntityNotFound.GetDescription(),
+                    (int)BusinessTypeException.EntityNotFound);
             }
 
             return transaction;
@@ -64,8 +64,8 @@ namespace Domain.UseCase.Transactions
             Account accountSeleccionada = await _accountRepository.FindByIdAsync(accountId);
 
             if (accountSeleccionada is null)
-                throw new BusinessException(TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription(),
-                    (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                throw new BusinessException(BusinessTypeException.AccountNotFound.GetDescription(),
+                    (int)BusinessTypeException.AccountNotFound);
 
             return await _transactionRepository.FindByAccountIdAsync(accountId);
         }
@@ -134,11 +134,11 @@ namespace Domain.UseCase.Transactions
 
             if (cuentaDestino is null)
                 throw new BusinessException($"La cuenta de destino numero {idCuentaReceptor} no existe",
-                (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                (int)BusinessTypeException.AccountNotFound);
 
             if (cuentaDestino.IsCancelled())
-                throw new BusinessException(TipoExcepcionNegocio.EstadoCuentaCancelada.GetDescription(),
-                    (int)TipoExcepcionNegocio.EstadoCuentaCancelada);
+                throw new BusinessException(BusinessTypeException.AccountStateCancelled.GetDescription(),
+                    (int)BusinessTypeException.AccountStateCancelled);
 
             ValidarEstadoCuenta(cuentaOrigen, transaction.AccountId);
 
@@ -175,17 +175,17 @@ namespace Domain.UseCase.Transactions
         {
             if (account is null)
                 throw new BusinessException(
-                    idCuentaValidar is null ? TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription()
+                    idCuentaValidar is null ? BusinessTypeException.AccountNotFound.GetDescription()
                     : $"La cuenta de origen con Id {idCuentaValidar} no existe",
-                (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                (int)BusinessTypeException.AccountNotFound);
 
             if (account.IsCancelled())
-                throw new BusinessException(TipoExcepcionNegocio.EstadoCuentaCancelada.GetDescription(),
-                    (int)TipoExcepcionNegocio.EstadoCuentaCancelada);
+                throw new BusinessException(BusinessTypeException.AccountStateCancelled.GetDescription(),
+                    (int)BusinessTypeException.AccountStateCancelled);
 
             if (account.IsInactive())
-                throw new BusinessException(TipoExcepcionNegocio.EstadoCuentaInactiva.GetDescription(),
-                    (int)TipoExcepcionNegocio.EstadoCuentaInactiva);
+                throw new BusinessException(BusinessTypeException.AccountStateInactive.GetDescription(),
+                    (int)BusinessTypeException.AccountStateInactive);
         }
 
         private decimal ValidarValorRetiro(decimal valor, Account account)
@@ -197,14 +197,14 @@ namespace Domain.UseCase.Transactions
             {
                 if (account.AccountType == AccountType.Savings && valor > account.Balance)
                 {
-                    throw new BusinessException(TipoExcepcionNegocio.ValorRetiroNoPermitido.GetDescription(),
-                        (int)TipoExcepcionNegocio.ValorRetiroNoPermitido);
+                    throw new BusinessException(BusinessTypeException.ForbiddenWithdrawalValue.GetDescription(),
+                        (int)BusinessTypeException.ForbiddenWithdrawalValue);
                 }
 
                 if (account.AccountType == AccountType.Regular && valor > saldoConSobregiro)
                 {
-                    throw new BusinessException(TipoExcepcionNegocio.ValorRetiroNoPermitido.GetDescription(),
-                        (int)TipoExcepcionNegocio.ValorRetiroNoPermitido);
+                    throw new BusinessException(BusinessTypeException.ForbiddenWithdrawalValue.GetDescription(),
+                        (int)BusinessTypeException.ForbiddenWithdrawalValue);
                 }
 
                 return valor;
@@ -212,14 +212,14 @@ namespace Domain.UseCase.Transactions
 
             if (account.AccountType == AccountType.Savings && valorConGMF > account.Balance)
             {
-                throw new BusinessException(TipoExcepcionNegocio.ValorRetiroNoPermitido.GetDescription(),
-                    (int)TipoExcepcionNegocio.ValorRetiroNoPermitido);
+                throw new BusinessException(BusinessTypeException.ForbiddenWithdrawalValue.GetDescription(),
+                    (int)BusinessTypeException.ForbiddenWithdrawalValue);
             }
 
             if (account.AccountType == AccountType.Regular && valorConGMF > saldoConSobregiro)
             {
-                throw new BusinessException(TipoExcepcionNegocio.ValorRetiroNoPermitido.GetDescription(),
-                    (int)TipoExcepcionNegocio.ValorRetiroNoPermitido);
+                throw new BusinessException(BusinessTypeException.ForbiddenWithdrawalValue.GetDescription(),
+                    (int)BusinessTypeException.ForbiddenWithdrawalValue);
             }
 
             return valorConGMF;

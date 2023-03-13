@@ -11,22 +11,22 @@ namespace DrivenAdapters.Mongo.entities;
 /// <summary>
 /// DTO de entidad <see cref="Transaction"/>
 /// </summary>
-public class TransacciónEntity : EntityBase
+public class TransactionEntity : EntityBase
 {
     /// <summary>
     /// Id de entidad <see cref="Account"/>
     /// </summary>
-    [JsonProperty("idCuenta")]
-    [BsonElement("idCuenta")]
+    [JsonProperty("account_id")]
+    [BsonElement("account_id")]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string IdCuenta { get; set; }
+    public string AccountId { get; set; }
 
     /// <summary>
     /// Date De movimiento
     /// </summary>
-    [BsonElement("fecha_movimiento")]
+    [BsonElement("movement_date")]
     [BsonRepresentation(BsonType.DateTime)]
-    public DateTime FechaMovimiento { get; set; }
+    public DateTime MovementDate { get; set; }
 
     /// <summary>
     /// Enum <see cref="TransactionType"/>
@@ -38,26 +38,26 @@ public class TransacciónEntity : EntityBase
     /// <summary>
     /// Value
     /// </summary>
-    [BsonElement("valor")]
+    [BsonElement("value")]
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal Valor { get; set; }
+    public decimal Value { get; set; }
 
     /// <summary>
     /// Balance inicial
     /// </summary>
-    [BsonElement("saldo_inicial")]
+    [BsonElement("initial_balance")]
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal SaldoInicial { get; set; }
+    public decimal InitialBalance { get; set; }
 
     /// <summary>
     /// Balance final
     /// </summary>
-    [BsonElement("saldo_final")]
+    [BsonElement("final_balance")]
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal SaldoFinal { get; set; }
+    public decimal FinalBalance { get; set; }
 
     /// <summary>
     /// Descripcion
     /// </summary>
-    [BsonElement("descripcion")] public string Descripción { get; set; }
+    [BsonElement("description")] public string Description { get; set; }
 }

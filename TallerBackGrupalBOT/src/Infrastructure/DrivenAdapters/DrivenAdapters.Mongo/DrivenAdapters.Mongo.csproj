@@ -15,10 +15,10 @@
   <ItemGroup>
     <Compile Remove="Entities\**" />
     <Compile Include="Entities\Base\EntityBase.cs" />
-    <Compile Include="Entities\CuentaEntity.cs" />
-    <Compile Include="Entities\TransaccionEntity.cs" />
-    <Compile Include="Entities\ClienteEntity.cs" />
-    <Compile Include="Entities\UsuarioEntity.cs" />
+    <Compile Include="Entities\AccountEntity.cs" />
+    <Compile Include="Entities\TransactionEntity.cs" />
+    <Compile Include="Entities\ClientEntity.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
     <EmbeddedResource Remove="Entities\**" />
     <None Remove="Entities\**" />
   </ItemGroup>

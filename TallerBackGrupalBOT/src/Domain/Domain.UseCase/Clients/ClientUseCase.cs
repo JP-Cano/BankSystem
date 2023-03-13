@@ -49,13 +49,13 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {clientId}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             clienteSeleccionado.UpdateEmail(newEmail);
 
             if (!clienteSeleccionado.CheckEmail())
                 throw new BusinessException($"Correo electrónico nuevo no valido",
-                    (int)TipoExcepcionNegocio.CorreoElectronicoNoValido);
+                    (int)BusinessTypeException.InvalidEmail);
 
             return await _gatewayClient.UpdateAsync(clientId, clienteSeleccionado);
         }
@@ -73,7 +73,7 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {clientId}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             clienteSeleccionado.AddProductId(newAccount.Id);
 
@@ -95,23 +95,23 @@ namespace Domain.UseCase.Clients
 
             if (userSeleccionado is null)
                 throw new BusinessException($"No se encontró un user para la creación",
-                    (int)TipoExcepcionNegocio.UsuarioNoValido);
+                    (int)BusinessTypeException.InvalidUser);
 
             if (userSeleccionado.Rol != Roles.Admin)
                 throw new BusinessException($"El user {userSeleccionado.FullName} no puede crear nuevos clientes",
-                    (int)TipoExcepcionNegocio.UsuarioNoValido);
+                    (int)BusinessTypeException.InvalidUser);
 
             if (clienteVerificacion is not null)
                 throw new BusinessException($"Client con numero de identificación {newClient.IdNumber} ya existe",
-                    (int)TipoExcepcionNegocio.IdentificacionDeClienteYaExiste);
+                    (int)BusinessTypeException.ClientIdAlreadyExists);
 
             if (!newClient.VerifyClientAge(LegalAge.col))
                 throw new BusinessException($"El client debe ser mayor de edad",
-                    (int)TipoExcepcionNegocio.ClienteNoEsMayorDeEdad);
+                    (int)BusinessTypeException.ClientIsUnderAge);
 
             if (!newClient.CheckEmail())
                 throw new BusinessException($"El correo electrónico {newClient.Email} no es valido",
-                    (int)TipoExcepcionNegocio.CorreoElectronicoNoValido);
+                    (int)BusinessTypeException.InvalidEmail);
 
             HistoryUpdate nuevaActualizacion = new(HistoryUpdateType.Creation, userSeleccionado);
 
@@ -135,11 +135,11 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {clientId}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             if (clienteSeleccionado.HasActiveDebts)
                 throw new BusinessException($"Client no es posible deshabilitar por deudas activas",
-                    (int)TipoExcepcionNegocio.ClienteTieneDeudasActivas);
+                    (int)BusinessTypeException.ClientHasActiveDebts);
 
             clienteSeleccionado.Disable();
             await _gatewayClient.UpdateAsync(clientId, clienteSeleccionado);
@@ -159,7 +159,7 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {idCliente}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             clienteSeleccionado.DisableDebt();
             await _gatewayClient.UpdateAsync(idCliente, clienteSeleccionado);
@@ -179,7 +179,7 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {clientId}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             clienteSeleccionado.Enable();
             await _gatewayClient.UpdateAsync(clientId, clienteSeleccionado);
@@ -199,7 +199,7 @@ namespace Domain.UseCase.Clients
 
             if (clienteSeleccionado is null)
                 throw new BusinessException($"No existe client con el id {idCliente}",
-                    (int)TipoExcepcionNegocio.ClienteNoExiste);
+                    (int)BusinessTypeException.NonexistentClient);
 
             clienteSeleccionado.EnableDebt();
             await _gatewayClient.UpdateAsync(idCliente, clienteSeleccionado);

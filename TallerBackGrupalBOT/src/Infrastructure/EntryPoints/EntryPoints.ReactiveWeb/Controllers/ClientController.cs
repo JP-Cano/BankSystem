@@ -54,7 +54,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("add/{idUsuario}")]
-        public Task<IActionResult> CreateClient(string idUsuario, CrearCliente nuevoCliente) =>
+        public Task<IActionResult> CreateClient(string idUsuario, CreateClient nuevoCliente) =>
             HandleRequest(async () => await _useCase.CreateClient(idUsuario, _mapper.Map<Client>(nuevoCliente)), "");
 
         /// <summary>

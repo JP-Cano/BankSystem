@@ -47,15 +47,15 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <summary>
         /// Endpoint para crear entidad de tipo <see cref="Account"/>
         /// </summary>
-        /// <param name="crearCuenta"></param>
+        /// <param name="createAccount"></param>
         /// <param name="idUsuario"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("{idUsuario}")]
-        public Task<IActionResult> Create(string idUsuario, [FromBody] CrearCuenta crearCuenta) => HandleRequest(
+        public Task<IActionResult> Create(string idUsuario, [FromBody] CreateAccount createAccount) => HandleRequest(
             async () =>
             {
-                Account accountMapeada = _mapper.Map<Account>(crearCuenta);
+                Account accountMapeada = _mapper.Map<Account>(createAccount);
                 Account account = await _cuentaUseCase.Create(idUsuario, accountMapeada);
                 return _mapper.Map<CuentaHandler>(account);
             }, "");
@@ -68,7 +68,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("{idUsuario}")]
-        public Task<IActionResult> Cancel(string idUsuario, [FromBody] EstadosCuenta estadoCuenta) => HandleRequest(
+        public Task<IActionResult> Cancel(string idUsuario, [FromBody] AccountState estadoCuenta) => HandleRequest(
             async () =>
             {
                 Account accountMapeada = _mapper.Map<Account>(estadoCuenta);
@@ -84,7 +84,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("{idUsuario}")]
-        public Task<IActionResult> EnableAccount(string idUsuario, [FromBody] EstadosCuenta estadoCuenta) => HandleRequest(
+        public Task<IActionResult> EnableAccount(string idUsuario, [FromBody] AccountState estadoCuenta) => HandleRequest(
             async () =>
             {
                 Account accountMapeada = _mapper.Map<Account>(estadoCuenta);
@@ -100,7 +100,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("{idUsuario}")]
-        public Task<IActionResult> DisableAccount(string idUsuario, [FromBody] EstadosCuenta estadoCuenta) =>
+        public Task<IActionResult> DisableAccount(string idUsuario, [FromBody] AccountState estadoCuenta) =>
             HandleRequest(async () =>
             {
                 Account accountMapeada = _mapper.Map<Account>(estadoCuenta);

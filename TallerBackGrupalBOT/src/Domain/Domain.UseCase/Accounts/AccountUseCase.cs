@@ -52,20 +52,20 @@ namespace Domain.UseCase.Accounts
             var cuentaEncontrada = await _repositoryAccount.FindByIdAsync(account.Id);
 
             if (usuario is null)
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.UsuarioNoExiste);
+                throw new BusinessException(BusinessTypeException.UserNotFound.GetDescription(),
+                               (int)BusinessTypeException.UserNotFound);
 
             if (cuentaEncontrada is null)
-                throw new BusinessException(TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription(),
-                               (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                throw new BusinessException(BusinessTypeException.AccountNotFound.GetDescription(),
+                               (int)BusinessTypeException.AccountNotFound);
 
             if (usuario.Rol.Equals(Roles.Transactional))
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioSinPermisos.GetDescription(),
-                                (int)TipoExcepcionNegocio.UsuarioSinPermisos);
+                throw new BusinessException(BusinessTypeException.UserWithoutPermissions.GetDescription(),
+                                (int)BusinessTypeException.UserWithoutPermissions);
 
             if (cuentaEncontrada.Balance >= 1)
-                throw new BusinessException(TipoExcepcionNegocio.CuentaConSaldo.GetDescription(),
-                                                   (int)TipoExcepcionNegocio.CuentaConSaldo);
+                throw new BusinessException(BusinessTypeException.AccountWithBalance.GetDescription(),
+                                                   (int)BusinessTypeException.AccountWithBalance);
 
             Modification nuevaModificacion = new Modification(ModificationType.Cancellation, usuario);
             cuentaEncontrada.CancelAccount();
@@ -85,23 +85,23 @@ namespace Domain.UseCase.Accounts
             var cuentaEncontrada = await _repositoryAccount.FindByIdAsync(account.Id);
             if (usuario == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.UsuarioNoExiste);
+                throw new BusinessException(BusinessTypeException.UserNotFound.GetDescription(),
+                               (int)BusinessTypeException.UserNotFound);
             }
             else if (cuentaEncontrada == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription(),
-                               (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                throw new BusinessException(BusinessTypeException.AccountNotFound.GetDescription(),
+                               (int)BusinessTypeException.AccountNotFound);
             }
             else if (usuario.Rol.Equals(Roles.Transactional))
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioSinPermisos.GetDescription(),
-                                (int)TipoExcepcionNegocio.UsuarioSinPermisos);
+                throw new BusinessException(BusinessTypeException.UserWithoutPermissions.GetDescription(),
+                                (int)BusinessTypeException.UserWithoutPermissions);
             }
             else if (cuentaEncontrada.AccountStatus.Equals(AccountStatus.Inactive))
             {
-                throw new BusinessException(TipoExcepcionNegocio.CuentaEstaInactiva.GetDescription(),
-                                (int)TipoExcepcionNegocio.CuentaEstaInactiva);
+                throw new BusinessException(BusinessTypeException.InactiveAccount.GetDescription(),
+                                (int)BusinessTypeException.InactiveAccount);
             }
             Modification nuevaModificacion = new Modification(ModificationType.Disable, usuario);
             cuentaEncontrada.DisableAccount();
@@ -121,23 +121,23 @@ namespace Domain.UseCase.Accounts
             var cuentaEncontrada = await _repositoryAccount.FindByIdAsync(account.Id);
             if (usuario == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.UsuarioNoExiste);
+                throw new BusinessException(BusinessTypeException.UserNotFound.GetDescription(),
+                               (int)BusinessTypeException.UserNotFound);
             }
             else if (cuentaEncontrada == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription(),
-                               (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                throw new BusinessException(BusinessTypeException.AccountNotFound.GetDescription(),
+                               (int)BusinessTypeException.AccountNotFound);
             }
             else if (usuario.Rol.Equals(Roles.Transactional))
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioSinPermisos.GetDescription(),
-                                (int)TipoExcepcionNegocio.UsuarioSinPermisos);
+                throw new BusinessException(BusinessTypeException.UserWithoutPermissions.GetDescription(),
+                                (int)BusinessTypeException.UserWithoutPermissions);
             }
             else if (cuentaEncontrada.AccountStatus.Equals(AccountStatus.Active))
             {
-                throw new BusinessException(TipoExcepcionNegocio.CuentaEstaActiva.GetDescription(),
-                                (int)TipoExcepcionNegocio.CuentaEstaActiva);
+                throw new BusinessException(BusinessTypeException.ActiveAccount.GetDescription(),
+                                (int)BusinessTypeException.ActiveAccount);
             }
             Modification nuevaModificacion = new Modification(ModificationType.Enable, usuario);
             cuentaEncontrada.EnableAccount();
@@ -155,8 +155,8 @@ namespace Domain.UseCase.Accounts
             var cuenta = await _repositoryAccount.FindByIdAsync(idCuenta);
             if (cuenta == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.CuentaNoEncontrada.GetDescription(),
-                               (int)TipoExcepcionNegocio.CuentaNoEncontrada);
+                throw new BusinessException(BusinessTypeException.AccountNotFound.GetDescription(),
+                               (int)BusinessTypeException.AccountNotFound);
             }
             return cuenta;
         }
@@ -180,23 +180,23 @@ namespace Domain.UseCase.Accounts
             var cliente = await _clientRepository.FindByIdAsync(account.ClientId);
             if (usuario == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.UsuarioNoExiste);
+                throw new BusinessException(BusinessTypeException.UserNotFound.GetDescription(),
+                               (int)BusinessTypeException.UserNotFound);
             }
             else if (cliente == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.ClienteNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.ClienteNoExiste);
+                throw new BusinessException(BusinessTypeException.NonexistentClient.GetDescription(),
+                               (int)BusinessTypeException.NonexistentClient);
             }
             else if (usuario.Rol.Equals(Roles.Transactional))
             {
-                throw new BusinessException(TipoExcepcionNegocio.UsuarioSinPermisos.GetDescription(),
-                                (int)TipoExcepcionNegocio.UsuarioSinPermisos);
+                throw new BusinessException(BusinessTypeException.UserWithoutPermissions.GetDescription(),
+                                (int)BusinessTypeException.UserWithoutPermissions);
             }
             else if (cuentasExentas.Count > 0 && account.Exempt)
             {
-                throw new BusinessException(TipoExcepcionNegocio.YaExisteUnaCuentaExenta.GetDescription(),
-                                                  (int)TipoExcepcionNegocio.YaExisteUnaCuentaExenta);
+                throw new BusinessException(BusinessTypeException.ExemptAccountAlreadyExists.GetDescription(),
+                                                  (int)BusinessTypeException.ExemptAccountAlreadyExists);
             }
 
             var nuevaModificacion = new Modification(ModificationType.Creation, usuario);
@@ -226,8 +226,8 @@ namespace Domain.UseCase.Accounts
             var cliente = await _clientRepository.FindByIdAsync(clientId);
             if (cliente == null)
             {
-                throw new BusinessException(TipoExcepcionNegocio.ClienteNoExiste.GetDescription(),
-                               (int)TipoExcepcionNegocio.ClienteNoExiste);
+                throw new BusinessException(BusinessTypeException.NonexistentClient.GetDescription(),
+                               (int)BusinessTypeException.NonexistentClient);
             }
 
             var cuentasCliente = await _repositoryAccount.FindByClientAsync(clientId);

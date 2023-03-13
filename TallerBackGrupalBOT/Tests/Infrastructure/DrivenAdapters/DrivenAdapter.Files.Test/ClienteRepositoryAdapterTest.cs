@@ -17,13 +17,13 @@ namespace DrivenAdapter.Mongo.Tests
     {
         private readonly Mock<IContext> _mockContext;
 
-        private readonly Mock<IMongoCollection<ClienteEntity>> _mockCollectionCliente;
+        private readonly Mock<IMongoCollection<ClientEntity>> _mockCollectionCliente;
 
-        private readonly Mock<IMongoCollection<UsuarioEntity>> _mockCollectionUsuario;
+        private readonly Mock<IMongoCollection<UserEntity>> _mockCollectionUsuario;
 
-        private readonly Mock<IAsyncCursor<ClienteEntity>> _mockAsyncCursorCliente;
+        private readonly Mock<IAsyncCursor<ClientEntity>> _mockAsyncCursorCliente;
 
-        private readonly Mock<IAsyncCursor<UsuarioEntity>> _mockAsyncCursorUsuario;
+        private readonly Mock<IAsyncCursor<UserEntity>> _mockAsyncCursorUsuario;
 
         private readonly IMapper _mapper;
 
@@ -66,13 +66,13 @@ namespace DrivenAdapter.Mongo.Tests
         {
             // Arrange
             _mockCollectionUsuario.Setup(mongo => mongo.FindAsync(
-                It.IsAny<FilterDefinition<UsuarioEntity>>(),
-                It.IsAny<FindOptions<UsuarioEntity, UsuarioEntity>>(),
+                It.IsAny<FilterDefinition<UserEntity>>(),
+                It.IsAny<FindOptions<UserEntity, UserEntity>>(),
                 It.IsAny<CancellationToken>()
                 ));
 
             _mockCollectionCliente.Setup(mongo => mongo.InsertOneAsync(
-                It.IsAny<ClienteEntity>(),
+                It.IsAny<ClientEntity>(),
                 It.IsAny<InsertOneOptions>(),
                 It.IsAny<CancellationToken>()
                 ));
@@ -97,8 +97,8 @@ namespace DrivenAdapter.Mongo.Tests
         {
             // Arrange
             _mockCollectionCliente.Setup(mongo => mongo.FindAsync(
-                It.IsAny<FilterDefinition<ClienteEntity>>(),
-                It.IsAny<FindOptions<ClienteEntity, ClienteEntity>>(),
+                It.IsAny<FilterDefinition<ClientEntity>>(),
+                It.IsAny<FindOptions<ClientEntity, ClientEntity>>(),
                 It.IsAny<CancellationToken>()
                 ));
 
@@ -111,28 +111,28 @@ namespace DrivenAdapter.Mongo.Tests
             var result = await repository.FindByIdAsync(clienteSeleccionado.Id);
 
             // Assert
-            Assert.Equal(clienteSeleccionado.CorreoElectronico, result.Email);
+            Assert.Equal(clienteSeleccionado.Email, result.Email);
         }
 
         #region Métodos privados
 
-        private List<ClienteEntity> CrearListaClientesTest()
+        private List<ClientEntity> CrearListaClientesTest()
         {
-            return new List<ClienteEntity>
+            return new List<ClientEntity>
             {
-                //_mapper.Map<ClienteEntity>(
+                //_mapper.Map<ClientEntity>(
                 //new CreateClient(IdType.CC, "123Identificacion", "Maria", "Hernandez", "maria@gmail.com", new DateOnly(1993, 03, 02))),
 
-                //_mapper.Map<ClienteEntity>(
+                //_mapper.Map<ClientEntity>(
                 //new CreateClient(IdType.CE, "345Identificacion", "Carlos", "Carmona", "carlos@gmail.com", new DateOnly(1993, 05, 14)))
             };
         }
 
-        private List<UsuarioEntity> CrearListaUsuariosTest()
+        private List<UserEntity> CrearListaUsuariosTest()
         {
-            var list = new List<UsuarioEntity>();
+            var list = new List<UserEntity>();
 
-            var usuarioE = _mapper.Map<UsuarioEntity>(new UserBuilderTest()
+            var usuarioE = _mapper.Map<UserEntity>(new UserBuilderTest()
                 .WithId("123id")
                 .WithNombreCompleto("Alberto Velázquez")
                 .WithRol(Roles.Admin).Build());

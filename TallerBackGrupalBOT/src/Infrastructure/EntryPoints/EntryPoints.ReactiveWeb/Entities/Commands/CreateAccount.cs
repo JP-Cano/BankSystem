@@ -5,12 +5,12 @@ namespace EntryPoints.ReactiveWeb.Entities.Commands
     /// <summary>
     /// Comando para crear una entidad de tipo <see cref="Account"/>
     /// </summary>
-    public class CrearCuenta
+    public class CreateAccount
     {
         /// <summary>
         /// Id del cliente
         /// </summary>
-        public string IdCliente { get; set; }
+        public string ClientId { get; set; }
 
         /// <summary>
         /// Tipo de cuenta
@@ -20,11 +20,11 @@ namespace EntryPoints.ReactiveWeb.Entities.Commands
         /// <summary>
         /// Balance de la cuenta
         /// </summary>
-        public decimal Saldo { get; set; }
+        public decimal Balance { get; set; }
 
         /// <summary>
         /// Indica si la cuenta es exenta
         /// </summary>
-        public bool Exenta { get; set; }
+        public bool Exempt { get; set; }
     }
 }
