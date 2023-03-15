@@ -41,13 +41,13 @@ public class UsuarioRepositoryAdapterTest
                 Task.FromResult(false));
 
         mockDbContext
-            .Setup(context => context.Usuarios)
+            .Setup(context => context.Users)
             .Returns(_mockColeccionMongoUsuario.Object);
 
         _userRepository = new UserRepositoryAdapter(mockDbContext.Object, mapper);
     }
 
-    [Fact(DisplayName = "FindAllAsync debe retornar una lista de Usuarios")]
+    [Fact(DisplayName = "FindAllAsync debe retornar una lista de Users")]
     public async Task ObtenerTodosAsync_RetornaTodosLosUsuarios_Exitoso()
     {
         // Arrange

@@ -2,9 +2,9 @@
 
 namespace EntryPoints.GRPc.Dtos;
 
-public class CrearUsuarioProto
+public class CreateUserProto
 {
-    public string NombreCompleto { get; set; }
+    public string FullName { get; set; }
 
     public Roles Rol { get; set; }
 }

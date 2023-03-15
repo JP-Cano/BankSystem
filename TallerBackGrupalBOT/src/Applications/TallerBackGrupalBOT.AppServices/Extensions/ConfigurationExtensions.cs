@@ -20,9 +20,9 @@ namespace TallerBackGrupalBOT.AppServices.Extensions
         /// <param name="configuration"></param>
         /// <returns></returns>
         public static IConfigurationBuilder AddJsonProvider(this IConfigurationBuilder configuration)
-                => configuration
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                    .AddJsonFile("config/appsettings.json", optional: true, reloadOnChange: true);
+            => configuration
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("config/appsettings.json", optional: true, reloadOnChange: true);
 
         /// <summary>
         /// Adds the key vault provider.
@@ -33,7 +33,8 @@ namespace TallerBackGrupalBOT.AppServices.Extensions
         {
             AzureKeyVaultConfig settings = new();
             configuration.GetSection(nameof(AzureKeyVaultConfig)).Bind(settings);
-            configuration.AddAzureKeyVault(new AzureKeyVaultConfigurationOptions(settings.KeyVault, settings.AppId, settings.AppSecret));
+            configuration.AddAzureKeyVault(
+                new AzureKeyVaultConfigurationOptions(settings.KeyVault, settings.AppId, settings.AppSecret));
             return configuration;
         }
 
@@ -46,11 +47,12 @@ namespace TallerBackGrupalBOT.AppServices.Extensions
         /// <param name="suffix">suffix.</param>
         /// <returns></returns>
         public static IConfigurationBuilder AddMongoProvider(this ConfigurationManager configuration,
-               string sectionName, string connectionString, string suffix)
+            string sectionName, string connectionString, string suffix)
         {
             MongoAppsettingsConfiguration settings = new MongoAppsettingsConfiguration();
             configuration.GetSection(sectionName).Bind(settings);
             settings.ConnectionString = connectionString;
+
             configuration.AddMongoConfiguration(options =>
             {
                 options.ConnectionString = settings.ConnectionString;
@@ -58,7 +60,6 @@ namespace TallerBackGrupalBOT.AppServices.Extensions
                 options.DatabaseName = $"{settings.DatabaseName}_{suffix}";
                 options.ReloadOnChange = settings.ReloadOnChange;
             });
-
             return configuration;
         }
 

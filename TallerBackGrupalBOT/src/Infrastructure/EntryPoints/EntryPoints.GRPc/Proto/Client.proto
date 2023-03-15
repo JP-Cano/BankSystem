@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package clients;
+
+option csharp_namespace = "EntryPoints.GRPc.Protos";
+
+// Requests
+message CreateUserRequest {
+  string fullName = 1;
+  int32 rol = 2;
+}
+
+message CreateClientProto {
+  int32 IdType = 1;
+  string IdNumber = 2;
+  string Names = 3;
+  string LastNames = 4;
+  string Email = 5;
+  string Birthdate = 6;
+}
+
+// Responses
+message UserProto {
+  string id = 1;
+  string fullName = 2;
+  int32 rol = 3;
+}
+
+message ClientProto {
+  string CurrentDate = 1;
+  string Id = 2;
+  int32 IdType = 3;
+  string IdNumber = 4;
+  string Names = 5;
+  string LastNames = 6;
+  string Email = 7;
+  string Birthdate = 8;
+  string CreationDate = 9;
+  repeated ModificationProto HistoryUpdates = 10;
+  bool IsEnabled = 11;
+  bool HasActiveDebts = 12;
+  repeated string Products = 13;
+}
+
+message Empty {} 
+
+message ClientListResponse {
+	repeated ClientProto clients = 1;
+}
+
+message ModificationProto {
+  int32 modificationType = 1;
+  UserProto modificationUser = 2;
+  string fecha = 3;
+}
+
+message CreateClientRequest {
+  string userId = 1;
+  ClientProto client = 2;
+}
+
+// Services
+service ClientServices{
+  rpc CreateUser(CreateUserRequest) returns (UserProto);
+  rpc CreateClient(CreateClientRequest) returns (ClientProto);
+  rpc FindAllClients(Empty) returns (ClientListResponse);
+}

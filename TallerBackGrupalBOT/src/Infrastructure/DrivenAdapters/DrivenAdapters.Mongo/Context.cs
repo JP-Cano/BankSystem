@@ -32,22 +32,22 @@ namespace DrivenAdapters.Mongo
         /// <summary>
         /// Tipo de contrato <see cref="User"/>
         /// </summary>
-        public IMongoCollection<UserEntity> Usuarios => _database.GetCollection<UserEntity>("Usuarios");
+        public IMongoCollection<UserEntity> Users => _database.GetCollection<UserEntity>("Users");
 
         /// <summary>
         /// Tipo de contrato <see cref="Transaction"/>
         /// </summary>
-        public IMongoCollection<TransactionEntity> Transacciones =>
-            _database.GetCollection<TransactionEntity>("Transacciones");
+        public IMongoCollection<TransactionEntity> Transactions =>
+            _database.GetCollection<TransactionEntity>("Transactions");
 
         /// <summary>
         /// Colección en DB de <see cref="Client"/>
         /// </summary>
-        public IMongoCollection<ClientEntity> Clientes => _database.GetCollection<ClientEntity>("Clientes");
+        public IMongoCollection<ClientEntity> Clients => _database.GetCollection<ClientEntity>("Clients");
 
         /// <summary>
         /// Colección en DB de <see cref="Account"/>
         /// </summary>
-        public IMongoCollection<AccountEntity> Cuentas => _database.GetCollection<AccountEntity>("Cuentas");
+        public IMongoCollection<AccountEntity> Accounts => _database.GetCollection<AccountEntity>("Accounts");
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Domain.Model.Entities.Accounts;
-using Domain.Model.Entities.Clientes;
 using Domain.Model.Entities.Clients;
 using Domain.Model.Entities.Transactions;
 using Domain.Model.Entities.Users;
@@ -60,29 +59,29 @@ namespace TallerBackGrupalBOT.AppServices.Automapper
 
             #region GRPc command to HTTP command
 
-            CreateMap<CrearUsuarioRequest, CreateUser>();
-            CreateMap<CrearClienteProto, CreateClient>();
+            CreateMap<CreateUserRequest, CreateUser>();
+            CreateMap<CreateClientRequest, CreateClient>();
 
             #endregion GRPc command to HTTP command
 
             #region GRPc command to GRPc DTO
 
-            CreateMap<CrearUsuarioRequest, CrearUsuarioProto>().ReverseMap();
-            CreateMap<HistoryUpdate, ActualizacionProto>().ReverseMap();
+            CreateMap<CreateUserRequest, CreateUserProto>().ReverseMap();
+            CreateMap<HistoryUpdate, ModificationProto>().ReverseMap();
 
             #endregion GRPc command to GRPc DTO
 
             #region GRPc DTO to Domain Model
 
-            CreateMap<CrearUsuarioProto, User>().ReverseMap();
-            CreateMap<CrearClienteProto, Client>().ReverseMap();
+            CreateMap<CreateUserProto, User>().ReverseMap();
+            CreateMap<CreateClientProto, Client>().ReverseMap();
 
             #endregion GRPc DTO to Domain Model
 
             #region Domain Model to GRPc Model
 
-            CreateMap<User, UsuarioProto>().ReverseMap();
-            CreateMap<Client, ClienteProto>().ReverseMap();
+            CreateMap<User, UserProto>().ReverseMap();
+            CreateMap<Client, ClientProto>().ReverseMap();
 
             #endregion Domain Model to GRPc Model
         }

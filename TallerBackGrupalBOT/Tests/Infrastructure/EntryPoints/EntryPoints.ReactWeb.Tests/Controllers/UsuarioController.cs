@@ -33,7 +33,7 @@ public class UsuarioControllerTest
         _userController.ControllerContext.HttpContext = new DefaultHttpContext();
         _userController.ControllerContext.HttpContext.Request.Headers["Location"] = "1,1";
         _userController.ControllerContext.RouteData = new RouteData();
-        _userController.ControllerContext.RouteData.Values.Add("controller", "Usuarios");
+        _userController.ControllerContext.RouteData.Values.Add("controller", "Users");
     }
 
     [Theory(DisplayName = "CreateAsync retorna el user creado con status 200")]

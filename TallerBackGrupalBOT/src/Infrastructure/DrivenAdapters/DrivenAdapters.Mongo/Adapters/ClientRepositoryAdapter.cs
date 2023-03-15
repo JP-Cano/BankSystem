@@ -28,7 +28,7 @@ namespace DrivenAdapters.Mongo.Adapters
         /// <param name="mapper"></param>
         public ClientRepositoryAdapter(IContext context, IMapper mapper)
         {
-            _collection = context.Clientes;
+            _collection = context.Clients;
             _mapper = mapper;
         }
 

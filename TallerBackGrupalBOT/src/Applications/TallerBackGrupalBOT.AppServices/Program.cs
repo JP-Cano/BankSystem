@@ -26,9 +26,6 @@ builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonProvider();
 
-//HACK: Para usar fuera de Siste.
-//builder.Configuration.AddKeyVaultProvider();
-
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
     .ReadFrom.Configuration(ctx.Configuration));
@@ -39,8 +36,7 @@ builder.Services.Configure<ConfiguradorAppSettings>(
     builder.Configuration.GetRequiredSection(nameof(ConfiguradorAppSettings)));
 ConfiguradorAppSettings appSettings =
     builder.Configuration.GetSection(nameof(ConfiguradorAppSettings)).Get<ConfiguradorAppSettings>();
-//HACK: Para usar fuera de Siste.
-//Secrets secrets = builder.Configuration.ResolveSecrets<Secrets>();
+
 Secrets secrets = builder.Configuration.GetSection(nameof(Secrets)).Get<Secrets>();
 string country = EnvironmentHelper.GetCountryOrDefault(appSettings.DefaultCountry);
 
@@ -48,23 +44,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.AddMongoProvider(
-    nameof(MongoConfigurationProvider), secrets.MongoConnection, country);
+builder.Configuration.AddMongoProvider(nameof(MongoConfigurationProvider), secrets.MongoConnection, country);
 
 #region Service Configuration
 
 string policyName = "cors";
+
 builder.Services
     .RegisterCors(policyName)
     .RegisterAutoMapper()
     .RegisterMongo(secrets.MongoConnection, $"{appSettings.Database}_{country}")
-    //.RegisterBlobstorage(secrets.StorageConnection, appSettings.StorageContainerName)
-    //.RegisterRedis(secrets.RedisConnection, 0)
     .RegisterServices()
     .AddVersionedApiExplorer()
     .HabilitarVesionamiento()
     .ConfigurarSwaggerConVersiones(builder.Environment, PlatformServices.Default.Application.ApplicationBasePath,
-        new string[] { "TallerBackGrupalBOT.AppServices.xml" });
+        new[] { "TallerBackGrupalBOT.AppServices.xml" });
 
 builder.Services
     .AddHealthChecks()

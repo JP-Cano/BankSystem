@@ -77,8 +77,8 @@ namespace DrivenAdapter.Mongo.Tests
                 It.IsAny<CancellationToken>()
                 ));
 
-            _mockContext.Setup(Context => Context.Usuarios).Returns(_mockCollectionUsuario.Object);
-            _mockContext.Setup(context => context.Clientes).Returns(_mockCollectionCliente.Object);
+            _mockContext.Setup(Context => Context.Users).Returns(_mockCollectionUsuario.Object);
+            _mockContext.Setup(context => context.Clients).Returns(_mockCollectionCliente.Object);
             var repository = new ClientRepositoryAdapter(_mockContext.Object, _mapper);
 
             var nuevoCliente = new Client("123Id", IdType.CE, "identificacion123",
@@ -102,7 +102,7 @@ namespace DrivenAdapter.Mongo.Tests
                 It.IsAny<CancellationToken>()
                 ));
 
-            _mockContext.Setup(context => context.Clientes).Returns(_mockCollectionCliente.Object);
+            _mockContext.Setup(context => context.Clients).Returns(_mockCollectionCliente.Object);
             var repository = new ClientRepositoryAdapter(_mockContext.Object, _mapper);
 
             var clienteSeleccionado = CrearListaClientesTest()[0];

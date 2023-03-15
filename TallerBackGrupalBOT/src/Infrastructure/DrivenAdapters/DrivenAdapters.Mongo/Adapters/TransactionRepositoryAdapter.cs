@@ -26,8 +26,8 @@ public class TransactionRepositoryAdapter : ITransactionRepository
     /// <param name="mapper"></param>
     public TransactionRepositoryAdapter(IContext mongoDb, IMapper mapper)
     {
-        _mongoTransacciónCollection = mongoDb.Transacciones;
-        _mongoCuentaCollection = mongoDb.Cuentas;
+        _mongoTransacciónCollection = mongoDb.Transactions;
+        _mongoCuentaCollection = mongoDb.Accounts;
         _mapper = mapper;
     }
 

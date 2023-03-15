@@ -73,7 +73,7 @@ namespace DrivenAdapters.Mongo.Entities
         public bool HasActiveDebts { get; private set; }
 
         /// <summary>
-        /// Cuentas del cliente
+        /// Accounts del cliente
         /// </summary>
         [BsonElement("products")]
         public List<string> Products { get; private set; }

@@ -24,7 +24,7 @@ public class UserRepositoryAdapter : IUserRepository
     /// <param name="mapper"></param>
     public UserRepositoryAdapter(IContext mongoDb, IMapper mapper)
     {
-        _mongoUsuarioCollection = mongoDb.Usuarios;
+        _mongoUsuarioCollection = mongoDb.Users;
         _mapper = mapper;
     }
 
